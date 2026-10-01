@@ -16,5 +16,5 @@ jobs:
    - run: gradle assembleDebug --no-daemon
    - uses: actions/upload-artifact@v4
      with:
-      name: AlFaizOrder-v1.0.0-debug
+      name: AlFaizOrder-v1.1.0-advanced-debug
       path: app/build/outputs/apk/debug/app-debug.apk
