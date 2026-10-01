@@ -30,20 +30,140 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  sv.addView(page);root.addView(sv);
  go.setOnClickListener(v->{if(n.getText().toString().trim().isEmpty()||ph.getText().toString().trim().isEmpty()||a.getText().toString().trim().isEmpty()){Toast.makeText(this,"Please complete all fields",Toast.LENGTH_SHORT).show();return;}p.edit().putBoolean("done",true).putString("name",n.getText().toString().trim()).putString("phone",ph.getText().toString().trim()).putString("address",a.getText().toString().trim()).apply();main();});
 }
- void main(){base();LinearLayout h=new LinearLayout(this);h.setBackgroundColor(ORANGE);h.addView(t("AL-FAIZ FAST FOOD",22,Color.WHITE),new LinearLayout.LayoutParams(0,60,1));Button prof=b("👤",ORANGE);h.addView(prof,new LinearLayout.LayoutParams(60,60));prof.setOnClickListener(v->profile());root.addView(h);search=f("Search menu...");root.addView(search,new LinearLayout.LayoutParams(-1,55));search.addTextChangedListener(new TextWatcher(){public void beforeTextChanged(CharSequence s,int a,int c,int d){}public void onTextChanged(CharSequence s,int a,int b,int c){render();}public void afterTextChanged(Editable e){}});HorizontalScrollView hs=new HorizontalScrollView(this);LinearLayout cs=new LinearLayout(this);for(String c:new String[]{"All","Shawarma","Pratha Rolls","Burgers","Wings","Pizza","Fries","Doner","Wraps","Pasta","Sandwich","Deals"}){Button q=b(c, c.equals(cat)?ORANGE:GREEN);cs.addView(q,new LinearLayout.LayoutParams(125,55));q.setOnClickListener(v->{cat=c;main();});}hs.addView(cs);root.addView(hs);ScrollView sv=new ScrollView(this);list=new LinearLayout(this);list.setOrientation(LinearLayout.VERTICAL);list.setPadding(10,5,10,90);sv.addView(list);root.addView(sv,new LinearLayout.LayoutParams(-1,0,1));LinearLayout bar=new LinearLayout(this);total=t("Rs 0",18,INK);bar.addView(total,new LinearLayout.LayoutParams(0,60,1));Button c=b("VIEW CART",GREEN);bar.addView(c,new LinearLayout.LayoutParams(150,60));c.setOnClickListener(v->cart());root.addView(bar);render();}
+ void main(){
+ base();
+ LinearLayout h=new LinearLayout(this);
+ h.setGravity(Gravity.CENTER_VERTICAL);
+ h.setPadding(16,0,8,0);
+ h.setBackgroundColor(ORANGE);
+ TextView title=t("AL-FAIZ FAST FOOD",21,Color.WHITE);
+ title.setTypeface(null,Typeface.BOLD);
+ h.addView(title,new LinearLayout.LayoutParams(0,60,1));
+ TextView prof=t("👤",22,Color.WHITE);
+ prof.setGravity(Gravity.CENTER);
+ prof.setBackground(cardBg(Color.rgb(220,65,20),30));
+ h.addView(prof,new LinearLayout.LayoutParams(46,46));
+ prof.setOnClickListener(v->profile());
+ root.addView(h,new LinearLayout.LayoutParams(-1,60));
+
+ search=f("Search menu...");
+ search.setTextSize(16);
+ search.setSingleLine(true);
+ search.setBackground(cardBg(Color.WHITE,22));
+ search.setElevation(2);
+ search.setPadding(18,0,18,0);
+ LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(-1,52);
+ sp.setMargins(10,8,10,6);
+ root.addView(search,sp);
+ search.addTextChangedListener(new TextWatcher(){
+  public void beforeTextChanged(CharSequence s,int a,int c,int d){}
+  public void onTextChanged(CharSequence s,int a,int b,int c){render();}
+  public void afterTextChanged(Editable e){}
+ });
+
+ HorizontalScrollView hs=new HorizontalScrollView(this);
+ hs.setHorizontalScrollBarEnabled(false);
+ LinearLayout cs=new LinearLayout(this);
+ cs.setGravity(Gravity.CENTER_VERTICAL);
+ cs.setPadding(10,4,10,4);
+ String[] cats={"All","Shawarma","Pratha Rolls","Burgers","Wings","Pizza","Fries","Doner","Wraps","Pasta","Sandwich","Deals"};
+ for(String c:cats){
+  TextView q=t(c,13,c.equals(cat)?Color.WHITE:INK);
+  q.setGravity(Gravity.CENTER);
+  q.setTypeface(null,Typeface.BOLD);
+  q.setBackground(cardBg(c.equals(cat)?ORANGE:Color.WHITE,24));
+  q.setElevation(2);
+  LinearLayout.LayoutParams qp=new LinearLayout.LayoutParams(
+      c.length()>10?150:108,44);
+  qp.setMargins(4,0,4,0);
+  cs.addView(q,qp);
+  q.setOnClickListener(v->{cat=c;main();});
+ }
+ hs.addView(cs);
+ root.addView(hs,new LinearLayout.LayoutParams(-1,52));
+
+ ScrollView sv=new ScrollView(this);
+ sv.setClipToPadding(false);
+ list=new LinearLayout(this);
+ list.setOrientation(LinearLayout.VERTICAL);
+ list.setPadding(10,6,10,14);
+ sv.addView(list,new ScrollView.LayoutParams(-1,-2));
+ root.addView(sv,new LinearLayout.LayoutParams(-1,0,1));
+
+ LinearLayout bar=new LinearLayout(this);
+ bar.setGravity(Gravity.CENTER_VERTICAL);
+ bar.setPadding(12,6,10,6);
+ bar.setBackgroundColor(Color.WHITE);
+ bar.setElevation(12);
+ total=t("0 items  |  Rs 0",16,INK);
+ total.setTypeface(null,Typeface.BOLD);
+ bar.addView(total,new LinearLayout.LayoutParams(0,56,1));
+ Button c=pill("VIEW CART",GREEN);
+ bar.addView(c,new LinearLayout.LayoutParams(135,48));
+ c.setOnClickListener(v->cart());
+ root.addView(bar,new LinearLayout.LayoutParams(-1,68));
+ render();
+}
  void render(){
- list.removeAllViews();String q=search==null?"":search.getText().toString().toLowerCase();
- for(Item i:menu){if(!cat.equals("All")&&!i.c.equals(cat))continue;if(!i.n.toLowerCase().contains(q))continue;
-  LinearLayout card=new LinearLayout(this);card.setGravity(Gravity.CENTER_VERTICAL);card.setPadding(10,10,10,10);card.setBackground(cardBg(Color.WHITE,30));card.setElevation(6);
-  ImageView im=new ImageView(this);im.setScaleType(ImageView.ScaleType.CENTER_CROP);im.setBackground(cardBg(Color.rgb(245,235,225),24));im.setClipToOutline(true);
-  loadFoodImage(im,i.c);card.addView(im,new LinearLayout.LayoutParams(112,112));
-  LinearLayout info=new LinearLayout(this);info.setOrientation(LinearLayout.VERTICAL);info.setPadding(14,0,6,0);
-  TextView name=t(i.n,17,INK);name.setTypeface(null,Typeface.BOLD);name.setMaxLines(2);info.addView(name,new LinearLayout.LayoutParams(-1,48));
-  TextView made=t("Fresh • Made to order",12,Color.DKGRAY);info.addView(made,new LinearLayout.LayoutParams(-1,28));
-  LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);TextView price=t("Rs "+i.p,18,ORANGE);price.setTypeface(null,Typeface.BOLD);row.addView(price,new LinearLayout.LayoutParams(0,46,1));
-  Button add=pill("＋ ADD",ORANGE);row.addView(add,new LinearLayout.LayoutParams(92,46));info.addView(row);card.addView(info,new LinearLayout.LayoutParams(0,132,1));
-  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,132);cp.setMargins(2,7,2,7);list.addView(card,cp);
-  add.setOnClickListener(v->{cart.put(i.n,cart.getOrDefault(i.n,0)+1);sum();v.startAnimation(AnimationUtils.loadAnimation(this,android.R.anim.fade_in));});
+ list.removeAllViews();
+ String q=search==null?"":search.getText().toString().trim().toLowerCase();
+ for(Item i:menu){
+  if(!cat.equals("All")&&!i.c.equals(cat))continue;
+  if(!i.n.toLowerCase().contains(q))continue;
+
+  LinearLayout card=new LinearLayout(this);
+  card.setOrientation(LinearLayout.HORIZONTAL);
+  card.setGravity(Gravity.CENTER_VERTICAL);
+  card.setPadding(9,9,9,9);
+  card.setBackground(cardBg(Color.WHITE,24));
+  card.setElevation(5);
+
+  ImageView im=new ImageView(this);
+  im.setScaleType(ImageView.ScaleType.CENTER_CROP);
+  im.setBackground(cardBg(Color.rgb(245,235,225),20));
+  im.setClipToOutline(true);
+  loadFoodImage(im,i.c);
+  LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(92,92);
+  card.addView(im,ip);
+
+  LinearLayout info=new LinearLayout(this);
+  info.setOrientation(LinearLayout.VERTICAL);
+  info.setPadding(12,0,2,0);
+
+  TextView name=t(i.n,17,INK);
+  name.setTypeface(null,Typeface.BOLD);
+  name.setMaxLines(2);
+  name.setEllipsize(TextUtils.TruncateAt.END);
+  info.addView(name,new LinearLayout.LayoutParams(-1,44));
+
+  TextView made=t("Fresh • Made to order",11,Color.GRAY);
+  made.setMaxLines(1);
+  info.addView(made,new LinearLayout.LayoutParams(-1,22));
+
+  LinearLayout row=new LinearLayout(this);
+  row.setGravity(Gravity.CENTER_VERTICAL);
+  TextView price=t("Rs "+i.p,17,ORANGE);
+  price.setTypeface(null,Typeface.BOLD);
+  row.addView(price,new LinearLayout.LayoutParams(0,38,1));
+
+  Button add=pill("＋ ADD",ORANGE);
+  add.setTextSize(12);
+  row.addView(add,new LinearLayout.LayoutParams(86,38));
+  info.addView(row,new LinearLayout.LayoutParams(-1,38));
+
+  card.addView(info,new LinearLayout.LayoutParams(0,92,1));
+
+  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);
+  cp.setMargins(2,5,2,5);
+  list.addView(card,cp);
+
+  add.setOnClickListener(v->{
+   cart.put(i.n,cart.getOrDefault(i.n,0)+1);
+   sum();
+   v.animate().scaleX(1.05f).scaleY(1.05f).setDuration(80).withEndAction(
+      ()->v.animate().scaleX(1f).scaleY(1f).setDuration(80).start()
+   ).start();
+  });
  }
  sum();
 }
