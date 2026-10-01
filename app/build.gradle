@@ -1,0 +1,9 @@
+plugins { id 'com.android.application' }
+def ks=System.getenv('ALFAIZ_KEYSTORE_PATH'), kp=System.getenv('ALFAIZ_KEYSTORE_PASSWORD'), ka=System.getenv('ALFAIZ_KEY_ALIAS'), kpass=System.getenv('ALFAIZ_KEY_PASSWORD')
+def signed=ks&&kp&&ka&&kpass
+android {
+ namespace 'com.alfaiz.fastfood'; compileSdk 36
+ defaultConfig { applicationId 'com.alfaiz.fastfood'; minSdk 23; targetSdk 36; versionCode 1; versionName '1.0.0' }
+ buildTypes { release { minifyEnabled false; shrinkResources false; if(signed) signingConfig signingConfigs.release } }
+ if(signed) { signingConfigs { release { storeFile file(ks); storePassword kp; keyAlias ka; keyPassword kpass } } }
+}
