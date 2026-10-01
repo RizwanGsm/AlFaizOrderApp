@@ -107,6 +107,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  void render(){
  list.removeAllViews();
  String q=search==null?"":search.getText().toString().trim().toLowerCase();
+
  for(Item i:menu){
   if(!cat.equals("All")&&!i.c.equals(cat))continue;
   if(!i.n.toLowerCase().contains(q))continue;
@@ -114,59 +115,60 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
   LinearLayout card=new LinearLayout(this);
   card.setOrientation(LinearLayout.HORIZONTAL);
   card.setGravity(Gravity.CENTER_VERTICAL);
-  card.setPadding(9,9,9,9);
-  card.setBackground(cardBg(Color.WHITE,24));
-  card.setElevation(5);
+  card.setPadding(10,10,10,10);
+  card.setBackground(cardBg(Color.WHITE,22));
+  card.setElevation(4);
 
   ImageView im=new ImageView(this);
   im.setScaleType(ImageView.ScaleType.CENTER_CROP);
-  im.setBackground(cardBg(Color.rgb(245,235,225),20));
+  im.setBackground(cardBg(Color.rgb(245,235,225),18));
   im.setClipToOutline(true);
   loadFoodImage(im,i.c);
-  LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(92,92);
-  card.addView(im,ip);
+  card.addView(im,new LinearLayout.LayoutParams(88,88));
 
   LinearLayout info=new LinearLayout(this);
   info.setOrientation(LinearLayout.VERTICAL);
-  info.setPadding(12,0,2,0);
+  info.setGravity(Gravity.CENTER_VERTICAL);
+  info.setPadding(12,0,0,0);
 
-  TextView name=t(i.n,17,INK);
+  TextView name=t(i.n,16,INK);
   name.setTypeface(null,Typeface.BOLD);
   name.setMaxLines(2);
   name.setEllipsize(TextUtils.TruncateAt.END);
-  info.addView(name,new LinearLayout.LayoutParams(-1,44));
+  name.setGravity(Gravity.CENTER_VERTICAL);
+  info.addView(name,new LinearLayout.LayoutParams(-1,0,1));
 
-  TextView made=t("Fresh • Made to order",11,Color.GRAY);
-  made.setMaxLines(1);
-  info.addView(made,new LinearLayout.LayoutParams(-1,22));
+  LinearLayout bottom=new LinearLayout(this);
+  bottom.setGravity(Gravity.CENTER_VERTICAL);
 
-  LinearLayout row=new LinearLayout(this);
-  row.setGravity(Gravity.CENTER_VERTICAL);
   TextView price=t("Rs "+i.p,17,ORANGE);
   price.setTypeface(null,Typeface.BOLD);
-  row.addView(price,new LinearLayout.LayoutParams(0,38,1));
+  price.setGravity(Gravity.CENTER_VERTICAL);
+  bottom.addView(price,new LinearLayout.LayoutParams(0,42,1));
 
-  Button add=pill("＋ ADD",ORANGE);
+  Button add=pill("ADD",ORANGE);
   add.setTextSize(12);
-  row.addView(add,new LinearLayout.LayoutParams(86,38));
-  info.addView(row,new LinearLayout.LayoutParams(-1,38));
+  add.setPadding(8,0,8,0);
+  bottom.addView(add,new LinearLayout.LayoutParams(82,40));
+  info.addView(bottom,new LinearLayout.LayoutParams(-1,42));
 
-  card.addView(info,new LinearLayout.LayoutParams(0,92,1));
+  card.addView(info,new LinearLayout.LayoutParams(0,88,1));
 
-  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,-2);
-  cp.setMargins(2,5,2,5);
+  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,108);
+  cp.setMargins(3,6,3,6);
   list.addView(card,cp);
 
   add.setOnClickListener(v->{
    cart.put(i.n,cart.getOrDefault(i.n,0)+1);
    sum();
-   v.animate().scaleX(1.05f).scaleY(1.05f).setDuration(80).withEndAction(
-      ()->v.animate().scaleX(1f).scaleY(1f).setDuration(80).start()
+   v.animate().scaleX(1.06f).scaleY(1.06f).setDuration(70).withEndAction(
+     ()->v.animate().scaleX(1f).scaleY(1f).setDuration(70).start()
    ).start();
   });
  }
  sum();
 }
+
 void loadFoodImage(ImageView v,String category){
  String url=null;
  if(category.equals("Burgers"))url="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=82";
