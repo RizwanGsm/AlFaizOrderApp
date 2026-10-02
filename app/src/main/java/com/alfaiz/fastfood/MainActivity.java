@@ -190,15 +190,24 @@ void loadFoodImage(ImageView v,String category){
   void send(int total){
     if(cart.isEmpty()){ Toast.makeText(this,"Cart is empty",0).show(); return; }
     StringBuilder m=new StringBuilder("*AL-FAIZ FAST FOOD ORDER*");
-    m.append('\n').append('\n');
-    m.append("Name: ").append(p.getString("name","")).append('\n');
-    m.append("Phone: ").append(p.getString("phone","")).append('\n');
-    m.append("Address: ").append(p.getString("address","")).append('\n').append('\n');
-    for(String k:cart.keySet()) m.append(cart.get(k)).append(" x ").append(k).append(" — Rs ").append(prices.get(k)*cart.get(k)).append('\n');
-    m.append('\n').append("*TOTAL: Rs ").append(total).append("*");
-    try{ String u=URLEncoder.encode(m.toString(),"UTF-8"); startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://wa.me/923177052500?text="+u))); }
-    catch(Exception e){ Toast.makeText(this,"WhatsApp unavailable",1).show(); }
+    m.append((char)10).append((char)10);
+    m.append("Name: ").append(p.getString("name","")).append((char)10);
+    m.append("Phone: ").append(p.getString("phone","")).append((char)10);
+    m.append("Address: ").append(p.getString("address","")).append((char)10).append((char)10);
+    for(String k:cart.keySet()) m.append(cart.get(k)).append(" x ").append(k).append(" — Rs ").append(prices.get(k)*cart.get(k)).append((char)10);
+    m.append((char)10).append("*TOTAL: Rs ").append(total).append("*");
+    try{
+      String u=URLEncoder.encode(m.toString(),"UTF-8");
+      startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://wa.me/923177052500?text="+u)));
+    }catch(Exception e){ Toast.makeText(this,"WhatsApp unavailable",1).show(); }
   }
- void send(int total){if(cart.isEmpty()){Toast.makeText(this,"Cart is empty",0).show();return;}StringBuilder m=new StringBuilder("*AL-FAIZ FAST FOOD ORDER*\n\n");m.append("Name: ").append(p.getString("name","")).append("\n");m.append("Phone: ").append(p.getString("phone","")).append("\n");m.append("Address: ").append(p.getString("address","")).append("\n\n");for(String k:cart.keySet())m.append(cart.get(k)).append(" x ").append(k).append(" — Rs ").append(prices.get(k)*cart.get(k)).append("\n");m.append("\n*TOTAL: Rs ").append(total).append("*");try{String u=URLEncoder.encode(m.toString(),"UTF-8");startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://wa.me/923177052500?text="+u)));}catch(Exception e){Toast.makeText(this,"WhatsApp unavailable",1).show();}}\n void profile(){base();root.addView(t("Customer Details",25,ORANGE));EditText n=f("Name");n.setText(p.getString("name",""));EditText ph=f("Phone");ph.setText(p.getString("phone",""));EditText a=f("Address");a.setText(p.getString("address",""));root.addView(n);root.addView(ph);root.addView(a);Button save=b("SAVE",ORANGE);root.addView(save);save.setOnClickListener(v->{p.edit().putString("name",n.getText().toString()).putString("phone",ph.getText().toString()).putString("address",a.getText().toString()).apply();main();});}
-}}
+  void profile(){
+    base(); root.addView(t("Customer Details",25,ORANGE));
+    EditText n=f("Name"); n.setText(p.getString("name",""));
+    EditText ph=f("Phone"); ph.setText(p.getString("phone",""));
+    EditText a=f("Address"); a.setText(p.getString("address",""));
+    root.addView(n); root.addView(ph); root.addView(a);
+    Button save=b("SAVE",ORANGE); root.addView(save);
+    save.setOnClickListener(v->{p.edit().putString("name",n.getText().toString()).putString("phone",ph.getText().toString()).putString("address",a.getText().toString()).apply(); main();});
+  }
 }
