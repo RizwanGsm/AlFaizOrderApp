@@ -260,6 +260,11 @@ void loadFoodImage(ImageView v,String category){
      Space gap=new Space(this);l.addView(gap,new LinearLayout.LayoutParams(1,dp(8)));
      Button clear=pill("CLEAR CART",Color.DKGRAY);l.addView(clear,new LinearLayout.LayoutParams(-1,dp(48)));
      clear.setOnClickListener(v->{cart.clear();cart();});
+     TextView thanks=t("Thank you for choosing Al-Faiz Fast Food ❤️\\nThanks to Rizwan Ali",14,Color.DKGRAY);
+     thanks.setGravity(Gravity.CENTER);
+     thanks.setTypeface(Typeface.DEFAULT,Typeface.BOLD);
+     thanks.setPadding(0,dp(14),0,dp(8));
+     l.addView(thanks,new LinearLayout.LayoutParams(-1,dp(68)));
    }
    sv.addView(l);
    root.addView(sv,new LinearLayout.LayoutParams(-1,0,1));
