@@ -2,7 +2,7 @@
   "settings": {
     "whatsapp": "+923168553075",
     "restaurantName": "Al-Faiz Fast Food",
-    "appEnabled": false
+    "appEnabled": true
   },
   "menu": [
     {
