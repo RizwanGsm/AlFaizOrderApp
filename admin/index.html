@@ -44,14 +44,16 @@ pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;fon
 </div>
 
 <script>
-const api="https://api.github.com/repos/RizwanGsm/AlFaizOrderApp/contents/online/github-config.json";\nconst publicConfig="https://raw.githubusercontent.com/RizwanGsm/AlFaizOrderApp/main/online/github-config.json";
+const api="https://api.github.com/repos/RizwanGsm/AlFaizOrderApp/contents/online/github-config.json";
+const publicConfig="https://raw.githubusercontent.com/RizwanGsm/AlFaizOrderApp/main/online/github-config.json";
 let config=null,fileSha=null;
 const tokenEl=document.getElementById("token"),statusEl=document.getElementById("status"),msg=document.getElementById("message"),jsonEl=document.getElementById("json");
 const saved=sessionStorage.getItem("alfaiz_admin_token"); if(saved) tokenEl.value=saved;
 
 function auth(){const t=tokenEl.value.trim();if(!t){msg.innerHTML='<span class="err">Enter a GitHub token first.</span>';return null}return t}
 function headers(t){return {"Accept":"application/vnd.github+json","Authorization":"Bearer "+t,"X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"}}
-function b64decode(s){const bin=atob(s.replace(/\n/g,""));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}
+function b64decode(s){const bin=atob(s.replace(/
+/g,""));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}
 function b64encode(s){const bytes=new TextEncoder().encode(s);let bin="";for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin)}
 function render(){
  const on=!config.settings||config.settings.appEnabled!==false;
@@ -92,10 +94,12 @@ async function setApp(enabled){
  msg.textContent="Updating GitHub...";
  try{
   config.settings=config.settings||{};config.settings.appEnabled=enabled;
-  const r=await fetch(api,{method:"PUT",headers:headers(t),body:JSON.stringify({message:(enabled?"Enable":"Disable")+" Al-Faiz app remotely",content:b64encode(JSON.stringify(config,null,2)+"\n"),sha:fileSha,branch:"main"})});
+  const r=await fetch(api,{method:"PUT",headers:headers(t),body:JSON.stringify({message:(enabled?"Enable":"Disable")+" Al-Faiz app remotely",content:b64encode(JSON.stringify(config,null,2)+"
+"),sha:fileSha,branch:"main"})});
   const x=await r.json();if(!r.ok)throw new Error(x.message||"Update failed");
   fileSha=x.content.sha;render();msg.innerHTML='<span class="ok">✓ App is now '+(enabled?"ON":"OFF")+'. The change has been committed to GitHub.</span>';
  }catch(e){msg.innerHTML='<span class="err">Update failed: '+e.message+'</span>';await load()}
 }
-loadPublic();\nif(saved)load();
+loadPublic();
+if(saved)load();
 </script></body></html>
