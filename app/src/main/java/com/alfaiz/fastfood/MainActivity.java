@@ -21,18 +21,18 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  void base(){root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(CREAM);setContentView(root);}
  void signup(){
  screen="signup";
- base(); ScrollView sv=new ScrollView(this); LinearLayout page=new LinearLayout(this); page.setOrientation(LinearLayout.VERTICAL); page.setPadding(22,28,22,28);
+ base(); ScrollView sv=new ScrollView(this); LinearLayout page=new LinearLayout(this); page.setOrientation(LinearLayout.VERTICAL); page.setPadding(dp(18),dp(22),dp(18),dp(24));
  TextView icon=t("🍔",54,ORANGE); icon.setGravity(Gravity.CENTER); page.addView(icon,new LinearLayout.LayoutParams(-1,80));
  TextView brand=t("AL-FAIZ FAST FOOD",28,ORANGE); brand.setGravity(Gravity.CENTER); brand.setTypeface(null,Typeface.BOLD); page.addView(brand);
- TextView sub=t("Fresh food • Fast delivery • Easy ordering",15,Color.DKGRAY); sub.setGravity(Gravity.CENTER); page.addView(sub,new LinearLayout.LayoutParams(-1,48));
- LinearLayout box=new LinearLayout(this); box.setOrientation(LinearLayout.VERTICAL); box.setPadding(18,20,18,20); box.setBackground(cardBg(Color.WHITE,34)); box.setElevation(10);
- TextView w=t("Welcome! 👋",24,INK);w.setTypeface(null,Typeface.BOLD);box.addView(w,new LinearLayout.LayoutParams(-1,50));
- TextView info=t("Enter your details once and checkout will be much faster next time.",14,Color.DKGRAY);box.addView(info,new LinearLayout.LayoutParams(-1,50));
- EditText n=modernField("  👤  Full name"),ph=modernField("  📱  Phone number"),a=modernField("  📍  Delivery address");
- box.addView(n,new LinearLayout.LayoutParams(-1,58)); Space s1=new Space(this);box.addView(s1,new LinearLayout.LayoutParams(1,10));
- box.addView(ph,new LinearLayout.LayoutParams(-1,58)); Space s2=new Space(this);box.addView(s2,new LinearLayout.LayoutParams(1,10));
- box.addView(a,new LinearLayout.LayoutParams(-1,88)); Button go=pill("Continue to menu  →",ORANGE);box.addView(go,new LinearLayout.LayoutParams(-1,58));page.addView(box);
- TextView secure=t("🔒  Your delivery details are stored on this phone for your convenience.",12,Color.DKGRAY);secure.setGravity(Gravity.CENTER);page.addView(secure,new LinearLayout.LayoutParams(-1,60));
+ TextView sub=t("Fresh food • Fast delivery • Easy ordering",15,Color.DKGRAY); sub.setGravity(Gravity.CENTER); page.addView(sub,new LinearLayout.LayoutParams(-1,dp(48)));
+ LinearLayout box=new LinearLayout(this); box.setOrientation(LinearLayout.VERTICAL); box.setPadding(dp(18),dp(22),dp(18),dp(22)); box.setBackground(cardBg(Color.WHITE,34)); box.setElevation(10);
+ TextView w=t("Welcome! 👋",24,INK);w.setTypeface(null,Typeface.BOLD);box.addView(w,new LinearLayout.LayoutParams(-1,dp(52)));
+ TextView info=t("Enter your details once and checkout will be much faster next time.",14,Color.DKGRAY);info.setLineSpacing(2,1.05f); box.addView(info,new LinearLayout.LayoutParams(-1,dp(58)));
+ EditText n=modernField("  👤  Full name"),ph=modernField("  📱  Phone number"),a=modernField("  📍  Delivery address"); n.setInputType(0x0000c001); ph.setInputType(2); a.setSingleLine(false); a.setGravity(Gravity.TOP|Gravity.LEFT); a.setPadding(dp(18),dp(14),dp(18),dp(14));
+ box.addView(n,new LinearLayout.LayoutParams(-1,dp(60))); Space s1=new Space(this);box.addView(s1,new LinearLayout.LayoutParams(1,dp(14)));
+ box.addView(ph,new LinearLayout.LayoutParams(-1,dp(60))); Space s2=new Space(this);box.addView(s2,new LinearLayout.LayoutParams(1,dp(14)));
+ box.addView(a,new LinearLayout.LayoutParams(-1,dp(104))); Space s3=new Space(this);box.addView(s3,new LinearLayout.LayoutParams(1,dp(16))); Button go=pill("Continue to menu  →",ORANGE);box.addView(go,new LinearLayout.LayoutParams(-1,dp(56)));LinearLayout.LayoutParams boxLp=new LinearLayout.LayoutParams(-1,-2); boxLp.setMargins(0,dp(8),0,dp(8)); page.addView(box,boxLp);
+ TextView secure=t("🔒  Your delivery details are stored on this phone for your convenience.",12,Color.DKGRAY);secure.setGravity(Gravity.CENTER);page.addView(secure,new LinearLayout.LayoutParams(-1,dp(64)));
  sv.addView(page);root.addView(sv);
  go.setOnClickListener(v->{if(n.getText().toString().trim().isEmpty()||ph.getText().toString().trim().isEmpty()||a.getText().toString().trim().isEmpty()){Toast.makeText(this,"Please complete all fields",Toast.LENGTH_SHORT).show();return;}p.edit().putBoolean("done",true).putString("name",n.getText().toString().trim()).putString("phone",ph.getText().toString().trim()).putString("address",a.getText().toString().trim()).apply();main();});
 }
