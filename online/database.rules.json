@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".read": true,
+    ".write": "auth != null",
+    "settings": {
+      ".validate": "newData.hasChildren(['whatsapp','deliveryFee','restaurantName'])",
+      "whatsapp": { ".validate": "newData.isString()" },
+      "deliveryFee": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+      "restaurantName": { ".validate": "newData.isString()" }
+    },
+    "menu": {
+      "$item": {
+        ".validate": "newData.hasChildren(['name','category','price','enabled'])",
+        "name": { ".validate": "newData.isString()" },
+        "category": { ".validate": "newData.isString()" },
+        "price": { ".validate": "newData.isNumber() && newData.val() >= 0" },
+        "enabled": { ".validate": "newData.isBoolean()" }
+      }
+    }
+  }
+}
