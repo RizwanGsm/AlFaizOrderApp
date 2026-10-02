@@ -17,7 +17,7 @@ pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;fon
 
 <div class="card">
 <h2>Remote App Control</h2>
-<div id="status" class="status">Checking...</div>
+<div id="status" class="status">Loading status...</div>
 <div class="controls">
 <button id="onBtn" class="toggle onbtn" onclick="setApp(true)" disabled>🟢 TURN APP ON</button>
 <button id="offBtn" class="toggle offbtn" onclick="setApp(false)" disabled>🔴 TURN APP OFF</button>
@@ -44,7 +44,7 @@ pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;fon
 </div>
 
 <script>
-const api="https://api.github.com/repos/RizwanGsm/AlFaizOrderApp/contents/online/github-config.json";
+const api="https://api.github.com/repos/RizwanGsm/AlFaizOrderApp/contents/online/github-config.json";\nconst publicConfig="https://raw.githubusercontent.com/RizwanGsm/AlFaizOrderApp/main/online/github-config.json";
 let config=null,fileSha=null;
 const tokenEl=document.getElementById("token"),statusEl=document.getElementById("status"),msg=document.getElementById("message"),jsonEl=document.getElementById("json");
 const saved=sessionStorage.getItem("alfaiz_admin_token"); if(saved) tokenEl.value=saved;
@@ -63,13 +63,25 @@ function render(){
 }
 async function load(){
  const t=auth();if(!t)return;
- msg.textContent="Loading GitHub configuration...";
+ msg.textContent="Connecting to GitHub...";
  try{
   const r=await fetch(api+"?t="+Date.now(),{headers:headers(t),cache:"no-store"}); const x=await r.json();
   if(!r.ok)throw new Error("HTTP "+r.status+": "+(x.message||"GitHub API error"));
   fileSha=x.sha;config=JSON.parse(b64decode(x.content));render();
   sessionStorage.setItem("alfaiz_admin_token",t);msg.innerHTML='<span class="ok">Connected. App control is ready.</span>';
  }catch(e){msg.innerHTML='<span class="err">Connection failed: '+e.message+'</span>';document.getElementById("onBtn").disabled=true;document.getElementById("offBtn").disabled=true}
+}
+async function loadPublic(){
+ msg.textContent="Checking public app status...";
+ try{
+  const r=await fetch(publicConfig+"?t="+Date.now(),{cache:"no-store"}); if(!r.ok)throw new Error("HTTP "+r.status);
+  config=await r.json(); render();
+  msg.innerHTML='<span class="ok">Status loaded. Enter a GitHub token and tap Connect & Load to enable ON/OFF controls.</span>';
+ }catch(e){
+  statusEl.textContent="⚠️ STATUS UNAVAILABLE";statusEl.className="status off";
+  jsonEl.textContent="Could not read the public configuration: "+e.message;
+  msg.innerHTML='<span class="err">Status check failed: '+e.message+'</span>';
+ }
 }
 async function connect(){await load()}
 async function setApp(enabled){
@@ -85,5 +97,5 @@ async function setApp(enabled){
   fileSha=x.content.sha;render();msg.innerHTML='<span class="ok">✓ App is now '+(enabled?"ON":"OFF")+'. The change has been committed to GitHub.</span>';
  }catch(e){msg.innerHTML='<span class="err">Update failed: '+e.message+'</span>';await load()}
 }
-if(saved)load();
+loadPublic();\nif(saved)load();
 </script></body></html>
