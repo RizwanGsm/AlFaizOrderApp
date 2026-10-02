@@ -38,13 +38,13 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  h.setBackgroundColor(ORANGE);
  TextView title=t("AL-FAIZ FAST FOOD",21,Color.WHITE);
  title.setTypeface(null,Typeface.BOLD);
- h.addView(title,new LinearLayout.LayoutParams(0,60,1));
+ h.addView(title,new LinearLayout.LayoutParams(0,dp(60),1));
  TextView prof=t("👤",22,Color.WHITE);
  prof.setGravity(Gravity.CENTER);
  prof.setBackground(cardBg(Color.rgb(220,65,20),30));
- h.addView(prof,new LinearLayout.LayoutParams(46,46));
+ h.addView(prof,new LinearLayout.LayoutParams(dp(46),dp(46)));
  prof.setOnClickListener(v->profile());
- root.addView(h,new LinearLayout.LayoutParams(-1,60));
+ root.addView(h,new LinearLayout.LayoutParams(-1,dp(60)));
 
  search=f("Search menu...");
  search.setTextSize(16);
@@ -52,8 +52,8 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  search.setBackground(cardBg(Color.WHITE,22));
  search.setElevation(2);
  search.setPadding(18,0,18,0);
- LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(-1,52);
- sp.setMargins(10,8,10,6);
+ LinearLayout.LayoutParams sp=new LinearLayout.LayoutParams(-1,dp(52));
+ sp.setMargins(dp(10),dp(8),dp(10),dp(6));
  root.addView(search,sp);
  search.addTextChangedListener(new TextWatcher(){
   public void beforeTextChanged(CharSequence s,int a,int c,int d){}
@@ -75,33 +75,33 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
   q.setElevation(2);
   LinearLayout.LayoutParams qp=new LinearLayout.LayoutParams(
       c.length()>10?150:108,44);
-  qp.setMargins(4,0,4,0);
+  qp.setMargins(dp(4),0,dp(4),0);
   cs.addView(q,qp);
   q.setOnClickListener(v->{cat=c;main();});
  }
  hs.addView(cs);
- root.addView(hs,new LinearLayout.LayoutParams(-1,52));
+ root.addView(hs,new LinearLayout.LayoutParams(-1,dp(52)));
 
  ScrollView sv=new ScrollView(this);
  sv.setClipToPadding(false);
  list=new LinearLayout(this);
  list.setOrientation(LinearLayout.VERTICAL);
- list.setPadding(10,6,10,14);
+ list.setPadding(dp(10),dp(6),dp(10),dp(14));
  sv.addView(list,new ScrollView.LayoutParams(-1,-2));
  root.addView(sv,new LinearLayout.LayoutParams(-1,0,1));
 
  LinearLayout bar=new LinearLayout(this);
  bar.setGravity(Gravity.CENTER_VERTICAL);
- bar.setPadding(12,6,10,6);
+ bar.setPadding(dp(12),dp(6),dp(10),dp(6));
  bar.setBackgroundColor(Color.WHITE);
  bar.setElevation(12);
  total=t("0 items  |  Rs 0",16,INK);
  total.setTypeface(null,Typeface.BOLD);
- bar.addView(total,new LinearLayout.LayoutParams(0,56,1));
+ bar.addView(total,new LinearLayout.LayoutParams(0,dp(56),1));
  Button c=pill("VIEW CART",GREEN);
- bar.addView(c,new LinearLayout.LayoutParams(135,48));
+ bar.addView(c,new LinearLayout.LayoutParams(dp(135),dp(48)));
  c.setOnClickListener(v->cart());
- root.addView(bar,new LinearLayout.LayoutParams(-1,68));
+ root.addView(bar,new LinearLayout.LayoutParams(-1,dp(68)));
  render();
 }
  void render(){
@@ -135,7 +135,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
   name.setTypeface(null,Typeface.BOLD);
   name.setMaxLines(2);
   name.setEllipsize(TextUtils.TruncateAt.END);
-  name.setGravity(Gravity.CENTER_VERTICAL);
+  name.setGravity(Gravity.CENTER_VERTICAL);name.setIncludeFontPadding(false);name.setLineSpacing(0,1.0f);
   info.addView(name,new LinearLayout.LayoutParams(-1,dp(42)));
 
   LinearLayout bottom=new LinearLayout(this);
@@ -143,7 +143,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
 
   TextView price=menuText("Rs "+i.p,17,ORANGE);
   price.setTypeface(null,Typeface.BOLD);
-  price.setGravity(Gravity.CENTER_VERTICAL);
+  price.setGravity(Gravity.CENTER_VERTICAL);price.setIncludeFontPadding(false);
   bottom.addView(price,new LinearLayout.LayoutParams(0,dp(42),1));
 
   Button add=pill("ADD",ORANGE);
