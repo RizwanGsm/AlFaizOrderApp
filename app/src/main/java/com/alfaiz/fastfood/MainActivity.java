@@ -124,7 +124,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
 
   LinearLayout card=new LinearLayout(this);
   card.setOrientation(LinearLayout.VERTICAL);
-  card.setPadding(dp(10),dp(10),dp(10),dp(10));
+  card.setPadding(dp(10),dp(10),dp(10),dp(10)); card.setClipChildren(false);
   card.setBackground(cardBg(Color.WHITE,24));
   card.setElevation(5);
 
@@ -234,7 +234,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
   bottom.addView(add,new LinearLayout.LayoutParams(dp(deal?108:82),dp(42)));
   card.addView(bottom,new LinearLayout.LayoutParams(-1,dp(48)));
 
-  int cardHeight=deal?130+(products.length*58):108;
+  int cardHeight=deal?(190+(products.length*58)):160;
   LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,dp(cardHeight));
   cp.setMargins(dp(3),dp(7),dp(3),dp(7));
   list.addView(card,cp);
