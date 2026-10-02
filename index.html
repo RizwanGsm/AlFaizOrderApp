@@ -1,0 +1,36 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al-Faiz Remote Control</title><!-- pages-v2 -->
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#fff5dc;color:#222}.wrap{max-width:900px;margin:auto;padding:18px}
+.card{background:#fff;padding:20px;border-radius:20px;margin:14px 0;box-shadow:0 4px 16px #0002}
+h1{color:#f4511e}button,a{display:inline-block;padding:13px 18px;border-radius:12px;border:0;background:#f4511e;color:#fff;text-decoration:none;font-weight:bold;margin:5px;cursor:pointer}
+.danger{background:#444}.active{background:#1b8e3e}.muted{color:#666;line-height:1.5}.status{font-size:20px;font-weight:bold;margin:10px 0}
+pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto}
+</style></head><body><div class="wrap">
+<h1>🍔 Al-Faiz Remote Control</h1>
+<div class="card"><h2>Remote App Control</h2>
+<div id="status" class="status">Checking GitHub config...</div>
+<p class="muted">This panel uses GitHub as the remote configuration source. Changes are made to <b>online/github-config.json</b> and the Android app reads that file from GitHub.</p>
+<a id="edit" href="https://github.com/RizwanGsm/AlFaizOrderApp/edit/main/online/github-config.json">OPEN CONFIG IN GITHUB</a>
+</div>
+<div class="card"><h2>How to shut down the app</h2>
+<ol class="muted"><li>Open the GitHub config using the button above.</li><li>Find <code>"appEnabled": true</code>.</li><li>Change it to <code>"appEnabled": false</code>.</li><li>Commit the change to <b>main</b>.</li></ol>
+<p class="muted">To reactivate it, change <code>false</code> back to <code>true</code>. The official app checks this setting when it starts.</p>
+</div>
+<div class="card"><h2>Menu & Restaurant Changes</h2>
+<p class="muted">The same JSON file controls the WhatsApp number, menu, prices, deals and enabled/hidden products.</p>
+<a href="https://github.com/RizwanGsm/AlFaizOrderApp/edit/main/online/github-config.json">EDIT MENU / PRICES</a>
+<a href="https://github.com/RizwanGsm/AlFaizOrderApp" class="danger">OPEN REPOSITORY</a>
+</div>
+<div class="card"><h2>Current configuration</h2><pre id="json">Loading...</pre></div>
+</div>
+<script>
+const raw="https://raw.githubusercontent.com/RizwanGsm/AlFaizOrderApp/main/online/github-config.json";
+fetch(raw+"?t="+Date.now()).then(r=>r.json()).then(x=>{
+ const on=!x.settings||x.settings.appEnabled!==false;
+ document.getElementById("status").textContent=on?"🟢 APP ACTIVE":"🔴 APP SHUT DOWN";
+ document.getElementById("status").className="status "+(on?"active":"");
+ document.getElementById("json").textContent=JSON.stringify(x,null,2);
+}).catch(e=>{document.getElementById("status").textContent="Unable to read GitHub config";document.getElementById("json").textContent=e});
+</script></body></html>
