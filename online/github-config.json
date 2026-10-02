@@ -1,0 +1,563 @@
+{
+  "settings": {
+    "whatsapp": "+923168553075",
+    "restaurantName": "Al-Faiz Fast Food",
+    "appEnabled": true
+  },
+  "menu": [
+    {
+      "category": "Shawarma",
+      "name": "Chicken Shawarma",
+      "price": 160,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Zinger Shawarma",
+      "price": 230,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Special Shawarma",
+      "price": 230,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Tika Shawarma",
+      "price": 270,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Malai Boti Shawarma",
+      "price": 340,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Chicken Achari Shawarma",
+      "price": 190,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Cheese Shawarma",
+      "price": 230,
+      "enabled": true
+    },
+    {
+      "category": "Shawarma",
+      "name": "Steak Shawarma",
+      "price": 240,
+      "enabled": true
+    },
+    {
+      "category": "Pratha Rolls",
+      "name": "Chicken Pratha Roll",
+      "price": 220,
+      "enabled": true
+    },
+    {
+      "category": "Pratha Rolls",
+      "name": "Tika Pratha Roll",
+      "price": 290,
+      "enabled": true
+    },
+    {
+      "category": "Pratha Rolls",
+      "name": "Malai Boti Pratha Roll",
+      "price": 360,
+      "enabled": true
+    },
+    {
+      "category": "Pratha Rolls",
+      "name": "Zinger Pratha Roll",
+      "price": 280,
+      "enabled": true
+    },
+    {
+      "category": "Pratha Rolls",
+      "name": "Kabab Pratha Roll",
+      "price": 280,
+      "enabled": true
+    },
+    {
+      "category": "Burgers",
+      "name": "Zinger Burger",
+      "price": 350,
+      "enabled": true
+    },
+    {
+      "category": "Burgers",
+      "name": "Peti Burger",
+      "price": 250,
+      "enabled": true
+    },
+    {
+      "category": "Burgers",
+      "name": "Boss Burger",
+      "price": 500,
+      "enabled": true
+    },
+    {
+      "category": "Burgers",
+      "name": "Tower Burger",
+      "price": 660,
+      "enabled": true
+    },
+    {
+      "category": "Burgers",
+      "name": "Anda Shami Burger",
+      "price": 120,
+      "enabled": true
+    },
+    {
+      "category": "Burgers",
+      "name": "Chicken Burger",
+      "price": 230,
+      "enabled": true
+    },
+    {
+      "category": "Wings",
+      "name": "BBQ Wings 6 pcs",
+      "price": 300,
+      "enabled": true
+    },
+    {
+      "category": "Wings",
+      "name": "BBQ Wings 12 pcs",
+      "price": 600,
+      "enabled": true
+    },
+    {
+      "category": "Wings",
+      "name": "Hot Wings 6 pcs",
+      "price": 300,
+      "enabled": true
+    },
+    {
+      "category": "Wings",
+      "name": "Hot Wings 12 pcs",
+      "price": 600,
+      "enabled": true
+    },
+    {
+      "category": "Wings",
+      "name": "Nuggets 6 pcs",
+      "price": 300,
+      "enabled": true
+    },
+    {
+      "category": "Wings",
+      "name": "Nuggets 12 pcs",
+      "price": 600,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Tika Pizza S",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Tika Pizza M",
+      "price": 900,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Tika Pizza L",
+      "price": 1250,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Tika Pizza XL",
+      "price": 1750,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Fajita Pizza S",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Fajita Pizza M",
+      "price": 900,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Fajita Pizza L",
+      "price": 1250,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Fajita Pizza XL",
+      "price": 1750,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Supreme Pizza S",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Supreme Pizza M",
+      "price": 900,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Supreme Pizza L",
+      "price": 1250,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Chicken Supreme Pizza XL",
+      "price": 1750,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Hot N Spicy Pizza S",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Hot N Spicy Pizza M",
+      "price": 900,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Hot N Spicy Pizza L",
+      "price": 1250,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Hot N Spicy Pizza XL",
+      "price": 1750,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Cheese Lover Pizza S",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Cheese Lover Pizza M",
+      "price": 900,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Cheese Lover Pizza L",
+      "price": 1250,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "Cheese Lover Pizza XL",
+      "price": 1750,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "All Veggie Pizza S",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "All Veggie Pizza M",
+      "price": 900,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "All Veggie Pizza L",
+      "price": 1250,
+      "enabled": true
+    },
+    {
+      "category": "Pizza",
+      "name": "All Veggie Pizza XL",
+      "price": 1750,
+      "enabled": true
+    },
+    {
+      "category": "Fries",
+      "name": "Regular Fries",
+      "price": 250,
+      "enabled": true
+    },
+    {
+      "category": "Fries",
+      "name": "Large Fries",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Fries",
+      "name": "Masala Fries",
+      "price": 450,
+      "enabled": true
+    },
+    {
+      "category": "Fries",
+      "name": "Special Loaded Fries",
+      "price": 750,
+      "enabled": true
+    },
+    {
+      "category": "Fries",
+      "name": "Crunchy Loaded Fries",
+      "price": 850,
+      "enabled": true
+    },
+    {
+      "category": "Doner",
+      "name": "Doner Half",
+      "price": 350,
+      "enabled": true
+    },
+    {
+      "category": "Doner",
+      "name": "Doner Full",
+      "price": 650,
+      "enabled": true
+    },
+    {
+      "category": "Wraps",
+      "name": "B.B.Q Wrap",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Wraps",
+      "name": "Arabic Wrap",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Wraps",
+      "name": "Tika Wrap",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Wraps",
+      "name": "Fajita Wrap",
+      "price": 400,
+      "enabled": true
+    },
+    {
+      "category": "Wraps",
+      "name": "Twister Wrap",
+      "price": 450,
+      "enabled": true
+    },
+    {
+      "category": "Wraps",
+      "name": "Grilled Wrap",
+      "price": 450,
+      "enabled": true
+    },
+    {
+      "category": "Pasta",
+      "name": "Special Pasta Half",
+      "price": 450,
+      "enabled": true
+    },
+    {
+      "category": "Pasta",
+      "name": "Special Pasta Full",
+      "price": 800,
+      "enabled": true
+    },
+    {
+      "category": "Pasta",
+      "name": "Creamy Pasta Half",
+      "price": 450,
+      "enabled": true
+    },
+    {
+      "category": "Pasta",
+      "name": "Creamy Pasta Full",
+      "price": 800,
+      "enabled": true
+    },
+    {
+      "category": "Sandwich",
+      "name": "Pizza Sandwich",
+      "price": 600,
+      "enabled": true
+    },
+    {
+      "category": "Sandwich",
+      "name": "Mexican Sandwich",
+      "price": 650,
+      "enabled": true
+    },
+    {
+      "category": "Sandwich",
+      "name": "Special Sandwich",
+      "price": 600,
+      "enabled": true
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 1",
+      "price": 1200,
+      "enabled": true,
+      "details": "Includes: 3 Small Pizzas • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 2",
+      "price": 1500,
+      "enabled": true,
+      "details": "Includes: 1 Medium Pizza • 6 Nuggets • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 3",
+      "price": 1800,
+      "enabled": true,
+      "details": "Includes: 2 Medium Pizzas • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 4",
+      "price": 2800,
+      "enabled": true,
+      "details": "Includes: 2 Large Pizzas • 1½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 5",
+      "price": 3700,
+      "enabled": true,
+      "details": "Includes: 1 Large Pizza • 1 XL Pizza • 2 Liter Bottles"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 6",
+      "price": 1250,
+      "enabled": true,
+      "details": "Includes: 1 Regular Fries • 6 Hot Wings • 2 Zinger Burgers • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 7",
+      "price": 1150,
+      "enabled": true,
+      "details": "Includes: 1 Small Pizza • 1 Pasta • 6 Hot Wings • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 8",
+      "price": 2350,
+      "enabled": true,
+      "details": "Includes: 1 Large Special Pizza • 2 Zinger Burgers • 2 Chicken Shawarma • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 9",
+      "price": 1100,
+      "enabled": true,
+      "details": "Includes: 4 Anda Shami Burgers • 4 Chicken Shawarma • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 10",
+      "price": 1100,
+      "enabled": true,
+      "details": "Includes: 2 Shawarma • 2 Chicken Shawarma • 6 Nuggets • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 11",
+      "price": 2090,
+      "enabled": true,
+      "details": "Includes: 7 Chicken Shawarma • 1 Medium Pizza • 1½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 12",
+      "price": 1500,
+      "enabled": true,
+      "details": "Includes: 1 Full Pasta • 1 Regular Fries • 1 Spring Roll • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 13",
+      "price": 750,
+      "enabled": true,
+      "details": "Includes: 1 Chicken Roll • 6 Hot Wings • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 14",
+      "price": 900,
+      "enabled": true,
+      "details": "Includes: 1 Small Pizza • 1 Full Pasta • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 15",
+      "price": 950,
+      "enabled": true,
+      "details": "Includes: 2 Small Pizzas • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 16",
+      "price": 1400,
+      "enabled": true,
+      "details": "Includes: 1 Medium Pizza • 1 Spring Roll • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 17",
+      "price": 1350,
+      "enabled": true,
+      "details": "Includes: 1 BBQ Roll • 1 Malai Boti Roll • ½ Pasta • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 18",
+      "price": 600,
+      "enabled": true,
+      "details": "Includes: 1 Zinger Burger • 1 Peti Burger • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 19",
+      "price": 1350,
+      "enabled": true,
+      "details": "Includes: 1 Small Pizza • 1 Special Roll • 1 Small Pasta • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 20",
+      "price": 900,
+      "enabled": true,
+      "details": "Includes: 2 Full Pasta • ½ Liter Bottle"
+    }
+  ]
+}
