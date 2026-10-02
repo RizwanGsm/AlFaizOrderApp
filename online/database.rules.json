@@ -3,9 +3,8 @@
     ".read": true,
     ".write": "auth != null",
     "settings": {
-      ".validate": "newData.hasChildren(['whatsapp','deliveryFee','restaurantName'])",
+      ".validate": "newData.hasChildren(['whatsapp','restaurantName'])",
       "whatsapp": { ".validate": "newData.isString()" },
-      "deliveryFee": { ".validate": "newData.isNumber() && newData.val() >= 0" },
       "restaurantName": { ".validate": "newData.isString()" }
     },
     "menu": {
