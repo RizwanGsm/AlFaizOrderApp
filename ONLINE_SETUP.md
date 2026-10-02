@@ -1,6 +1,6 @@
 # Al-Faiz Fast Food Online
 
-The Android app now supports a remote menu/settings backend. It keeps the built-in menu as a fallback and can load menu prices, enabled/disabled items, WhatsApp number, and delivery fee from Firebase Realtime Database.
+The Android app now supports a remote menu/settings backend. It keeps the built-in menu as a fallback and can load menu prices, enabled/disabled items, WhatsApp number, from Firebase Realtime Database.
 
 ## Firebase setup
 1. Create a Firebase project.
@@ -12,7 +12,7 @@ The Android app now supports a remote menu/settings backend. It keeps the built-
 7. Copy your Realtime Database URL into `ONLINE_DB_URL` in `MainActivity.java`, without the trailing `.json`.
 8. Host the `admin` folder on Firebase Hosting, GitHub Pages, or another HTTPS host.
 
-The customer APK reads the database directly. Normal menu/price/delivery/WhatsApp changes then take effect for installed apps without rebuilding the APK.
+The customer APK reads the database directly. Normal menu/price/WhatsApp changes then take effect for installed apps without rebuilding the APK.
 
 ## Security
 Do not put a Firebase Admin SDK service-account key in the website or APK. Use Firebase Authentication and Realtime Database rules for admin writes.
