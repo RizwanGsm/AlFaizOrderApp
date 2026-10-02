@@ -423,61 +423,141 @@
       "category": "Deals",
       "name": "Deal 1",
       "price": 1200,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 3 Small Pizzas • 1 Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 2",
       "price": 1500,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 1 Medium Pizza • 6 Nuggets • ½ Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 3",
       "price": 1800,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 2 Medium Pizzas • 1 Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 4",
       "price": 2800,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 2 Large Pizzas • 1½ Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 5",
       "price": 3700,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 1 Large Pizza • 1 XL Pizza • 2 Liter Bottles"
     },
     {
       "category": "Deals",
       "name": "Deal 6",
       "price": 1250,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 1 Regular Fries • 6 Hot Wings • 2 Zinger Burgers • 1 Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 7",
       "price": 1150,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 1 Small Pizza • 1 Pasta • 6 Hot Wings • 1 Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 8",
       "price": 2350,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 1 Large Special Pizza • 2 Zinger Burgers • 2 Chicken Shawarma • 1 Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 9",
       "price": 1100,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 4 Anda Shami Burgers • 4 Chicken Shawarma • 1 Liter Bottle"
     },
     {
       "category": "Deals",
       "name": "Deal 10",
       "price": 1100,
-      "enabled": true
+      "enabled": true,
+      "details": "Includes: 2 Shawarma • 2 Chicken Shawarma • 6 Nuggets • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 11",
+      "price": 2090,
+      "enabled": true,
+      "details": "Includes: 7 Chicken Shawarma • 1 Medium Pizza • 1½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 12",
+      "price": 1500,
+      "enabled": true,
+      "details": "Includes: 1 Full Pasta • 1 Regular Fries • 1 Spring Roll • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 13",
+      "price": 750,
+      "enabled": true,
+      "details": "Includes: 1 Chicken Roll • 6 Hot Wings • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 14",
+      "price": 900,
+      "enabled": true,
+      "details": "Includes: 1 Small Pizza • 1 Full Pasta • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 15",
+      "price": 950,
+      "enabled": true,
+      "details": "Includes: 2 Small Pizzas • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 16",
+      "price": 1400,
+      "enabled": true,
+      "details": "Includes: 1 Medium Pizza • 1 Spring Roll • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 17",
+      "price": 1350,
+      "enabled": true,
+      "details": "Includes: 1 BBQ Roll • 1 Malai Boti Roll • ½ Pasta • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 18",
+      "price": 600,
+      "enabled": true,
+      "details": "Includes: 1 Zinger Burger • 1 Peti Burger • ½ Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 19",
+      "price": 1350,
+      "enabled": true,
+      "details": "Includes: 1 Small Pizza • 1 Special Roll • 1 Small Pasta • 1 Liter Bottle"
+    },
+    {
+      "category": "Deals",
+      "name": "Deal 20",
+      "price": 900,
+      "enabled": true,
+      "details": "Includes: 2 Full Pasta • ½ Liter Bottle"
     }
   ]
 }
