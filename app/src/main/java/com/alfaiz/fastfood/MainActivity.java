@@ -229,8 +229,8 @@ void loadFoodImage(ImageView v,String category){
        info.setOrientation(LinearLayout.VERTICAL);
        TextView nm=menuText(item,16,INK); nm.setTypeface(null,Typeface.BOLD); nm.setMaxLines(2);
        TextView pr=menuText("Rs "+prices.get(k)+" each",13,Color.DKGRAY);
-       info.addView(nm,new LinearLayout.LayoutParams(0,dp(42),1));
-       info.addView(pr,new LinearLayout.LayoutParams(0,dp(28),1));
+       info.addView(nm,new LinearLayout.LayoutParams(-1,dp(42)));
+       info.addView(pr,new LinearLayout.LayoutParams(-1,dp(28)));
        row.addView(info,new LinearLayout.LayoutParams(0,dp(82),1));
        LinearLayout qty=new LinearLayout(this); qty.setGravity(Gravity.CENTER);
        Button minus=pill("−",Color.DKGRAY); Button plus=pill("+",ORANGE);
