@@ -2,13 +2,13 @@
   "settings": {
     "whatsapp": "+923168553075",
     "restaurantName": "Al-Faiz Fast Food",
-    "appEnabled": true
+    "appEnabled": false
   },
   "menu": [
     {
       "category": "Shawarma",
       "name": "Chicken Shawarma",
-      "price": 160876,
+      "price": 160,
       "enabled": true
     },
     {
