@@ -2,7 +2,7 @@ package com.alfaiz.fastfood;
 import android.app.*;import android.os.*;import android.content.*;import android.content.res.Configuration;import android.graphics.Color;import android.graphics.Bitmap;import android.graphics.BitmapFactory;import android.graphics.Typeface;import android.graphics.drawable.GradientDrawable;import android.net.Uri;import android.text.*;import android.view.*;import android.view.animation.AnimationUtils;import android.widget.*;import java.net.URLEncoder;import java.net.URL;import java.net.HttpURLConnection;import java.util.*;
 import android.app.*;import android.os.*;import android.content.*;import android.graphics.Color;import android.graphics.Bitmap;import android.graphics.BitmapFactory;import android.graphics.Typeface;import android.graphics.drawable.GradientDrawable;import android.net.Uri;import android.text.*;import android.view.*;import android.widget.*;import java.net.URLEncoder;import java.net.URL;import java.net.HttpURLConnection;import java.util.*;
 public class MainActivity extends Activity{
- int ORANGE=Color.rgb(244,81,30),CREAM=Color.rgb(255,245,220),GREEN=Color.rgb(27,142,62),INK=Color.rgb(34,34,34); LinearLayout root,list; TextView total; EditText search; Map<String,Integer> cart=new LinkedHashMap<>(),prices=new HashMap<>(); SharedPreferences p; String cat="All"; ArrayList<Item> menu=new ArrayList<>();
+ int ORANGE=Color.rgb(244,81,30),CREAM=Color.rgb(255,245,220),GREEN=Color.rgb(27,142,62),INK=Color.rgb(34,34,34); LinearLayout root,list; TextView total; EditText search; Map<String,Integer> cart=new LinkedHashMap<>(),prices=new HashMap<>(); SharedPreferences p; String screen=""; String cat="All"; ArrayList<Item> menu=new ArrayList<>();
  static class Item{String c,n;int p;Item(String c,String n,int p){this.c=c;this.n=n;this.p=p;}}
  public void onCreate(Bundle b){super.onCreate(b);p=getSharedPreferences("customer",0);seed();if(!p.getBoolean("done",false))signup();else main();}
  void seed(){add("Shawarma","Chicken Shawarma",160);add("Shawarma","Zinger Shawarma",230);add("Shawarma","Special Shawarma",230);add("Shawarma","Tika Shawarma",270);add("Shawarma","Malai Boti Shawarma",340);add("Shawarma","Chicken Achari Shawarma",190);add("Shawarma","Cheese Shawarma",230);add("Shawarma","Steak Shawarma",240);add("Pratha Rolls","Chicken Pratha Roll",220);add("Pratha Rolls","Tika Pratha Roll",290);add("Pratha Rolls","Malai Boti Pratha Roll",360);add("Pratha Rolls","Zinger Pratha Roll",280);add("Pratha Rolls","Kabab Pratha Roll",280);add("Burgers","Zinger Burger",350);add("Burgers","Peti Burger",250);add("Burgers","Boss Burger",500);add("Burgers","Tower Burger",660);add("Burgers","Anda Shami Burger",120);add("Burgers","Chicken Burger",230);add("Wings","BBQ Wings 6 pcs",300);add("Wings","BBQ Wings 12 pcs",600);add("Wings","Hot Wings 6 pcs",300);add("Wings","Hot Wings 12 pcs",600);add("Wings","Nuggets 6 pcs",300);add("Wings","Nuggets 12 pcs",600);String[] r={"Chicken Tika Pizza","Chicken Fajita Pizza","Chicken Supreme Pizza","Hot N Spicy Pizza","Cheese Lover Pizza","All Veggie Pizza"};for(String n:r){add("Pizza",n+" S",400);add("Pizza",n+" M",900);add("Pizza",n+" L",1250);add("Pizza",n+" XL",1750);}add("Fries","Regular Fries",250);add("Fries","Large Fries",400);add("Fries","Masala Fries",450);add("Fries","Special Loaded Fries",750);add("Fries","Crunchy Loaded Fries",850);add("Doner","Doner Half",350);add("Doner","Doner Full",650);add("Wraps","B.B.Q Wrap",400);add("Wraps","Arabic Wrap",400);add("Wraps","Tika Wrap",400);add("Wraps","Fajita Wrap",400);add("Wraps","Twister Wrap",450);add("Wraps","Grilled Wrap",450);add("Pasta","Special Pasta Half",450);add("Pasta","Special Pasta Full",800);add("Pasta","Creamy Pasta Half",450);add("Pasta","Creamy Pasta Full",800);add("Sandwich","Pizza Sandwich",600);add("Sandwich","Mexican Sandwich",650);add("Sandwich","Special Sandwich",600);add("Deals","Deal 1",1200);add("Deals","Deal 2",1500);add("Deals","Deal 3",1800);add("Deals","Deal 4",2800);add("Deals","Deal 5",3700);add("Deals","Deal 6",1250);add("Deals","Deal 7",1150);add("Deals","Deal 8",2350);add("Deals","Deal 9",1100);add("Deals","Deal 10",1100);}
@@ -17,6 +17,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  EditText f(String h){EditText e=new EditText(this);e.setHint(h);e.setTextSize(16);e.setSingleLine();e.setPadding(18,0,18,0);return e;}
  void base(){root=new LinearLayout(this);root.setOrientation(LinearLayout.VERTICAL);root.setBackgroundColor(CREAM);setContentView(root);}
  void signup(){
+ screen="signup";
  base(); ScrollView sv=new ScrollView(this); LinearLayout page=new LinearLayout(this); page.setOrientation(LinearLayout.VERTICAL); page.setPadding(22,28,22,28);
  TextView icon=t("🍔",54,ORANGE); icon.setGravity(Gravity.CENTER); page.addView(icon,new LinearLayout.LayoutParams(-1,80));
  TextView brand=t("AL-FAIZ FAST FOOD",28,ORANGE); brand.setGravity(Gravity.CENTER); brand.setTypeface(null,Typeface.BOLD); page.addView(brand);
@@ -33,6 +34,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  go.setOnClickListener(v->{if(n.getText().toString().trim().isEmpty()||ph.getText().toString().trim().isEmpty()||a.getText().toString().trim().isEmpty()){Toast.makeText(this,"Please complete all fields",Toast.LENGTH_SHORT).show();return;}p.edit().putBoolean("done",true).putString("name",n.getText().toString().trim()).putString("phone",ph.getText().toString().trim()).putString("address",a.getText().toString().trim()).apply();main();});
 }
  void main(){
+ screen="menu";
  base();
  LinearLayout h=new LinearLayout(this);
  h.setGravity(Gravity.CENTER_VERTICAL);
@@ -186,7 +188,82 @@ void loadFoodImage(ImageView v,String category){
  new AsyncTask<Void,Void,Bitmap>(){protected Bitmap doInBackground(Void...x){try{HttpURLConnection c=(HttpURLConnection)new URL(u).openConnection();c.setConnectTimeout(6000);c.setReadTimeout(8000);c.connect();Bitmap b=BitmapFactory.decodeStream(c.getInputStream());c.disconnect();return b;}catch(Exception e){return null;}}protected void onPostExecute(Bitmap b){if(b!=null){v.setImageBitmap(b);v.setAlpha(0f);v.animate().alpha(1f).setDuration(350).start();}}}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 }
  void sum(){int n=0,s=0;for(String k:cart.keySet()){n+=cart.get(k);s+=prices.get(k)*cart.get(k);}total.setText(n+" items  |  Rs "+s);}
- void cart(){base();root.addView(t("Your Order",27,ORANGE));ScrollView sv=new ScrollView(this);LinearLayout l=new LinearLayout(this);l.setOrientation(LinearLayout.VERTICAL);int sum=0;for(String k:cart.keySet()){int q=cart.get(k),z=prices.get(k)*q;sum+=z;l.addView(t(q+" × "+k+" = Rs "+z,17,INK));}sv.addView(l);root.addView(sv,new LinearLayout.LayoutParams(-1,0,1));final int orderTotal=sum;root.addView(t("TOTAL: Rs "+orderTotal,22,ORANGE));Button wa=b("SEND ORDER TO WHATSAPP",GREEN);root.addView(wa,new LinearLayout.LayoutParams(-1,60));wa.setOnClickListener(v->send(orderTotal));Button back=b("BACK TO MENU",Color.DKGRAY);root.addView(back,new LinearLayout.LayoutParams(-1,55));back.setOnClickListener(v->main());}
+ void cart(){
+   screen="cart";
+   base();
+   LinearLayout head=new LinearLayout(this);
+   head.setGravity(Gravity.CENTER_VERTICAL);
+   head.setPadding(dp(14),dp(8),dp(8),dp(8));
+   TextView back=t("‹",38,ORANGE); back.setGravity(Gravity.CENTER);
+   head.addView(back,new LinearLayout.LayoutParams(dp(52),dp(58)));
+   TextView title=t("Your Cart",25,INK); title.setTypeface(null,Typeface.BOLD);
+   head.addView(title,new LinearLayout.LayoutParams(0,dp(58),1));
+   TextView count=t(cart.size()+" items",14,Color.DKGRAY); count.setGravity(Gravity.CENTER);
+   head.addView(count,new LinearLayout.LayoutParams(dp(80),dp(58)));
+   root.addView(head);
+   back.setOnClickListener(v->main());
+
+   ScrollView sv=new ScrollView(this);
+   LinearLayout l=new LinearLayout(this);
+   l.setOrientation(LinearLayout.VERTICAL);
+   l.setPadding(dp(10),dp(4),dp(10),dp(12));
+
+   if(cart.isEmpty()){
+     TextView empty=t("🛒\n\nYour cart is empty\nAdd something delicious from the menu.",18,Color.DKGRAY);
+     empty.setGravity(Gravity.CENTER);
+     l.addView(empty,new LinearLayout.LayoutParams(-1,dp(260)));
+     Button shop=pill("BROWSE MENU",ORANGE);
+     l.addView(shop,new LinearLayout.LayoutParams(-1,dp(52)));
+     shop.setOnClickListener(v->main());
+   }else{
+     for(String k:new ArrayList<>(cart.keySet())){
+       final String item=k;
+       int q=cart.get(k);
+       int z=prices.get(k)*q;
+       LinearLayout row=new LinearLayout(this);
+       row.setGravity(Gravity.CENTER_VERTICAL);
+       row.setPadding(dp(10),dp(8),dp(8),dp(8));
+       row.setBackground(cardBg(Color.WHITE,20));
+       row.setElevation(3);
+       LinearLayout info=new LinearLayout(this);
+       info.setOrientation(LinearLayout.VERTICAL);
+       TextView nm=menuText(item,16,INK); nm.setTypeface(null,Typeface.BOLD); nm.setMaxLines(2);
+       TextView pr=menuText("Rs "+prices.get(k)+" each",13,Color.DKGRAY);
+       info.addView(nm,new LinearLayout.LayoutParams(0,dp(42),1));
+       info.addView(pr,new LinearLayout.LayoutParams(0,dp(28),1));
+       row.addView(info,new LinearLayout.LayoutParams(0,dp(82),1));
+       LinearLayout qty=new LinearLayout(this); qty.setGravity(Gravity.CENTER);
+       Button minus=pill("−",Color.DKGRAY); Button plus=pill("+",ORANGE);
+       TextView qq=menuText(String.valueOf(q),17,INK); qq.setGravity(Gravity.CENTER); qq.setTypeface(null,Typeface.BOLD);
+       qty.addView(minus,new LinearLayout.LayoutParams(dp(42),dp(42)));
+       qty.addView(qq,new LinearLayout.LayoutParams(dp(36),dp(42)));
+       qty.addView(plus,new LinearLayout.LayoutParams(dp(42),dp(42)));
+       row.addView(qty);
+       TextView lineTotal=menuText("Rs "+z,16,ORANGE); lineTotal.setGravity(Gravity.CENTER); lineTotal.setTypeface(null,Typeface.BOLD);
+       row.addView(lineTotal,new LinearLayout.LayoutParams(dp(78),dp(82)));
+       LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,dp(98)); rp.setMargins(0,dp(5),0,dp(5));
+       l.addView(row,rp);
+       minus.setOnClickListener(v->{int nq=cart.getOrDefault(item,0)-1;if(nq<=0)cart.remove(item);else cart.put(item,nq);cart();});
+       plus.setOnClickListener(v->{cart.put(item,cart.getOrDefault(item,0)+1);cart();});
+     }
+     Space gap=new Space(this);l.addView(gap,new LinearLayout.LayoutParams(1,dp(8)));
+     Button clear=pill("CLEAR CART",Color.DKGRAY);l.addView(clear,new LinearLayout.LayoutParams(-1,dp(48)));
+     clear.setOnClickListener(v->{cart.clear();cart();});
+   }
+   sv.addView(l);
+   root.addView(sv,new LinearLayout.LayoutParams(-1,0,1));
+
+   int subtotal=0;for(String k:cart.keySet())subtotal+=prices.get(k)*cart.get(k);
+   int delivery=subtotal>0?100:0;
+   int orderTotal=subtotal+delivery;
+   LinearLayout summary=new LinearLayout(this);summary.setOrientation(LinearLayout.VERTICAL);summary.setPadding(dp(14),dp(8),dp(14),dp(8));summary.setBackgroundColor(Color.WHITE);summary.setElevation(12);
+   TextView sub=menuText("Subtotal: Rs "+subtotal,15,INK);summary.addView(sub,new LinearLayout.LayoutParams(-1,dp(28)));
+   TextView del=menuText(delivery>0?"Delivery: Rs 100":"Delivery: Rs 0",14,Color.DKGRAY);summary.addView(del,new LinearLayout.LayoutParams(-1,dp(25)));
+   TextView ttl=menuText("TOTAL: Rs "+orderTotal,21,ORANGE);ttl.setTypeface(null,Typeface.BOLD);summary.addView(ttl,new LinearLayout.LayoutParams(-1,dp(38)));
+   Button wa=pill("PLACE ORDER ON WHATSAPP",GREEN);summary.addView(wa,new LinearLayout.LayoutParams(-1,dp(50)));
+   wa.setEnabled(!cart.isEmpty());wa.setAlpha(cart.isEmpty()?0.5f:1f);wa.setOnClickListener(v->send(orderTotal));
+   root.addView(summary);
+ }
   void send(int total){
     if(cart.isEmpty()){ Toast.makeText(this,"Cart is empty",0).show(); return; }
     StringBuilder m=new StringBuilder("*AL-FAIZ FAST FOOD ORDER*");
@@ -202,6 +279,7 @@ void loadFoodImage(ImageView v,String category){
     }catch(Exception e){ Toast.makeText(this,"WhatsApp unavailable",1).show(); }
   }
   void profile(){
+    screen="profile";
     base(); root.addView(t("Customer Details",25,ORANGE));
     EditText n=f("Name"); n.setText(p.getString("name",""));
     EditText ph=f("Phone"); ph.setText(p.getString("phone",""));
@@ -210,4 +288,11 @@ void loadFoodImage(ImageView v,String category){
     Button save=b("SAVE",ORANGE); root.addView(save);
     save.setOnClickListener(v->{p.edit().putString("name",n.getText().toString()).putString("phone",ph.getText().toString()).putString("address",a.getText().toString()).apply(); main();});
   }
+  @Override public void onBackPressed(){
+    if("cart".equals(screen)||"profile".equals(screen)){ main(); return; }
+    if("menu".equals(screen)){ super.onBackPressed(); return; }
+    if("signup".equals(screen)){ super.onBackPressed(); return; }
+    super.onBackPressed();
+  }
+
 }
