@@ -7,7 +7,7 @@ public class MainActivity extends Activity{
  public void onCreate(Bundle b){super.onCreate(b);p=getSharedPreferences("customer",0);seed();if(!ONLINE_DB_URL.isEmpty())loadOnline();else showInitial();}
  void showInitial(){if(!p.getBoolean("done",false))signup();else main();}
  void loadOnline(){new AsyncTask<Void,Void,Boolean>(){String data;protected Boolean doInBackground(Void...x){try{HttpURLConnection c=(HttpURLConnection)new URL(ONLINE_DB_URL+".json").openConnection();c.setConnectTimeout(7000);c.setReadTimeout(9000);c.connect();java.io.InputStream is=c.getInputStream();java.io.ByteArrayOutputStream out=new java.io.ByteArrayOutputStream();byte[] buf=new byte[4096];int n;while((n=is.read(buf))>0)out.write(buf,0,n);data=out.toString("UTF-8");c.disconnect();return true;}catch(Exception e){return false;}}protected void onPostExecute(Boolean ok){if(ok)applyOnline(data);showInitial();}}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);}
- void applyOnline(String json){try{org.json.JSONObject root=new org.json.JSONObject(json);org.json.JSONObject settings=root.optJSONObject("settings");if(settings!=null){whatsapp=settings.optString("whatsapp",whatsapp).replace("+","").replace(" ","");deliveryFee=settings.optInt("deliveryFee",deliveryFee);}org.json.JSONArray a=root.optJSONArray("menu");if(a!=null&&a.length()>0){menu.clear();prices.clear();for(int j=0;j<a.length();j++){org.json.JSONObject o=a.getJSONObject(j);if(o.optBoolean("enabled",true)){add(o.optString("category","Other"),o.getString("name"),o.getInt("price"),o.optString("details",""));}}}else{org.json.JSONObject mo=root.optJSONObject("menu");if(mo!=null&&mo.length()>0){menu.clear();prices.clear();java.util.Iterator<String> it=mo.keys();while(it.hasNext()){org.json.JSONObject o=mo.getJSONObject(it.next());if(o.optBoolean("enabled",true)){add(o.optString("category","Other"),o.getString("name"),o.getInt("price"));}}}}}catch(Exception ignored){}}
+ void applyOnline(String json){try{org.json.JSONObject root=new org.json.JSONObject(json);org.json.JSONObject settings=root.optJSONObject("settings");if(settings!=null){whatsapp=settings.optString("whatsapp",whatsapp).replace("+","").replace(" ","");deliveryFee=settings.optInt("deliveryFee",deliveryFee);}org.json.JSONArray a=root.optJSONArray("menu");if(a!=null&&a.length()>0){menu.clear();prices.clear();for(int j=0;j<a.length();j++){org.json.JSONObject o=a.getJSONObject(j);if(o.optBoolean("enabled",true)){add(o.optString("category","Other"),o.getString("name"),o.getInt("price"),o.optString("details",""));}}}else{org.json.JSONObject mo=root.optJSONObject("menu");if(mo!=null&&mo.length()>0){menu.clear();prices.clear();java.util.Iterator<String> it=mo.keys();while(it.hasNext()){org.json.JSONObject o=mo.getJSONObject(it.next());if(o.optBoolean("enabled",true)){add(o.optString("category","Other"),o.getString("name"),o.getInt("price"),o.optString("details",""));}}}}}catch(Exception ignored){}}
  void seed(){add("Shawarma","Chicken Shawarma",160);add("Shawarma","Zinger Shawarma",230);add("Shawarma","Special Shawarma",230);add("Shawarma","Tika Shawarma",270);add("Shawarma","Malai Boti Shawarma",340);add("Shawarma","Chicken Achari Shawarma",190);add("Shawarma","Cheese Shawarma",230);add("Shawarma","Steak Shawarma",240);add("Pratha Rolls","Chicken Pratha Roll",220);add("Pratha Rolls","Tika Pratha Roll",290);add("Pratha Rolls","Malai Boti Pratha Roll",360);add("Pratha Rolls","Zinger Pratha Roll",280);add("Pratha Rolls","Kabab Pratha Roll",280);add("Burgers","Zinger Burger",350);add("Burgers","Peti Burger",250);add("Burgers","Boss Burger",500);add("Burgers","Tower Burger",660);add("Burgers","Anda Shami Burger",120);add("Burgers","Chicken Burger",230);add("Wings","BBQ Wings 6 pcs",300);add("Wings","BBQ Wings 12 pcs",600);add("Wings","Hot Wings 6 pcs",300);add("Wings","Hot Wings 12 pcs",600);add("Wings","Nuggets 6 pcs",300);add("Wings","Nuggets 12 pcs",600);String[] r={"Chicken Tika Pizza","Chicken Fajita Pizza","Chicken Supreme Pizza","Hot N Spicy Pizza","Cheese Lover Pizza","All Veggie Pizza"};for(String n:r){add("Pizza",n+" S",400);add("Pizza",n+" M",900);add("Pizza",n+" L",1250);add("Pizza",n+" XL",1750);}add("Fries","Regular Fries",250);add("Fries","Large Fries",400);add("Fries","Masala Fries",450);add("Fries","Special Loaded Fries",750);add("Fries","Crunchy Loaded Fries",850);add("Doner","Doner Half",350);add("Doner","Doner Full",650);add("Wraps","B.B.Q Wrap",400);add("Wraps","Arabic Wrap",400);add("Wraps","Tika Wrap",400);add("Wraps","Fajita Wrap",400);add("Wraps","Twister Wrap",450);add("Wraps","Grilled Wrap",450);add("Pasta","Special Pasta Half",450);add("Pasta","Special Pasta Full",800);add("Pasta","Creamy Pasta Half",450);add("Pasta","Creamy Pasta Full",800);add("Sandwich","Pizza Sandwich",600);add("Sandwich","Mexican Sandwich",650);add("Sandwich","Special Sandwich",600);add("Deals","Deal 1",1200,"Includes: 3 Small Pizzas • 1 Liter Bottle");add("Deals","Deal 2",1500,"Includes: 1 Medium Pizza • 6 Nuggets • ½ Liter Bottle");add("Deals","Deal 3",1800,"Includes: 2 Medium Pizzas • 1 Liter Bottle");add("Deals","Deal 4",2800,"Includes: 2 Large Pizzas • 1½ Liter Bottle");add("Deals","Deal 5",3700,"Includes: 1 Large Pizza • 1 XL Pizza • 2 Liter Bottles");add("Deals","Deal 6",1250,"Includes: 1 Regular Fries • 6 Hot Wings • 2 Zinger Burgers • 1 Liter Bottle");add("Deals","Deal 7",1150,"Includes: 1 Small Pizza • 1 Pasta • 6 Hot Wings • 1 Liter Bottle");add("Deals","Deal 8",2350,"Includes: 1 Large Special Pizza • 2 Zinger Burgers • 2 Chicken Shawarma • 1 Liter Bottle");add("Deals","Deal 9",1100,"Includes: 4 Anda Shami Burgers • 4 Chicken Shawarma • 1 Liter Bottle");add("Deals","Deal 10",1100,"Includes: 2 Shawarma • 2 Chicken Shawarma • 6 Nuggets • 1 Liter Bottle");add("Deals","Deal 11",2090,"Includes: 7 Chicken Shawarma • 1 Medium Pizza • 1½ Liter Bottle");add("Deals","Deal 12",1500,"Includes: 1 Full Pasta • 1 Regular Fries • 1 Spring Roll • ½ Liter Bottle");add("Deals","Deal 13",750,"Includes: 1 Chicken Roll • 6 Hot Wings • ½ Liter Bottle");add("Deals","Deal 14",900,"Includes: 1 Small Pizza • 1 Full Pasta • ½ Liter Bottle");add("Deals","Deal 15",950,"Includes: 2 Small Pizzas • 1 Liter Bottle");add("Deals","Deal 16",1400,"Includes: 1 Medium Pizza • 1 Spring Roll • 1 Liter Bottle");add("Deals","Deal 17",1350,"Includes: 1 BBQ Roll • 1 Malai Boti Roll • ½ Pasta • 1 Liter Bottle");add("Deals","Deal 18",600,"Includes: 1 Zinger Burger • 1 Peti Burger • ½ Liter Bottle");add("Deals","Deal 19",1350,"Includes: 1 Small Pizza • 1 Special Roll • 1 Small Pasta • 1 Liter Bottle");add("Deals","Deal 20",900,"Includes: 2 Full Pasta • ½ Liter Bottle");}
  void add(String c,String n,int x){add(c,n,x,"");} void add(String c,String n,int x,String d){menu.add(new Item(c,n,x,d));prices.put(n,x);}
  TextView t(String s,int z,int col){TextView v=new TextView(this);v.setText(s);v.setTextSize(z);v.setTextColor(col);v.setPadding(16,8,16,8);return v;}
@@ -81,7 +81,7 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
   q.setBackground(cardBg(c.equals(cat)?ORANGE:Color.WHITE,24));
   q.setElevation(2);
   LinearLayout.LayoutParams qp=new LinearLayout.LayoutParams(
-      c.length()>10?150:108,44);
+      dp(c.length()>10?150:108),dp(44));
   qp.setMargins(dp(4),0,dp(4),0);
   cs.addView(q,qp);
   q.setOnClickListener(v->{cat=c;main();});
@@ -117,53 +117,126 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
 
  for(Item i:menu){
   if(!cat.equals("All")&&!i.c.equals(cat))continue;
-  if(!i.n.toLowerCase().contains(q))continue;
+  if(!i.n.toLowerCase().contains(q)&&!(i.c.equals("Deals")&&i.d.toLowerCase().contains(q)))continue;
+
+  boolean deal=i.c.equals("Deals");
+  String[] products=deal?dealProducts(i.d):new String[0];
 
   LinearLayout card=new LinearLayout(this);
-  card.setOrientation(LinearLayout.HORIZONTAL);
-  card.setGravity(Gravity.CENTER_VERTICAL);
-  card.setPadding(10,10,10,10);
-  card.setBackground(cardBg(Color.WHITE,22));
-  card.setElevation(4);
+  card.setOrientation(LinearLayout.VERTICAL);
+  card.setPadding(dp(10),dp(10),dp(10),dp(10));
+  card.setBackground(cardBg(Color.WHITE,24));
+  card.setElevation(5);
+
+  LinearLayout top=new LinearLayout(this);
+  top.setOrientation(LinearLayout.HORIZONTAL);
+  top.setGravity(Gravity.CENTER_VERTICAL);
 
   ImageView im=new ImageView(this);
   im.setScaleType(ImageView.ScaleType.CENTER_CROP);
   im.setBackground(cardBg(Color.rgb(245,235,225),18));
   im.setClipToOutline(true);
-  loadFoodImage(im,i.c);
-  card.addView(im,new LinearLayout.LayoutParams(dp(88),dp(88)));
+  loadFoodImage(im,deal&&products.length>0?dealImageCategory(products[0]):i.c);
+  top.addView(im,new LinearLayout.LayoutParams(dp(82),dp(82)));
 
   LinearLayout info=new LinearLayout(this);
   info.setOrientation(LinearLayout.VERTICAL);
   info.setGravity(Gravity.CENTER_VERTICAL);
-  info.setPadding(12,0,0,0);
+  info.setPadding(dp(12),0,0,0);
 
-  TextView name=menuText(i.n,16,INK);
+  TextView name=menuText(i.n,18,INK);
   name.setTypeface(null,Typeface.BOLD);
   name.setMaxLines(2);
   name.setEllipsize(TextUtils.TruncateAt.END);
-  name.setGravity(Gravity.CENTER_VERTICAL);name.setIncludeFontPadding(false);name.setLineSpacing(0,1.0f);
-  info.addView(name,new LinearLayout.LayoutParams(-1,i.c.equals("Deals")?dp(34):dp(42)));
-  if(i.c.equals("Deals")&&!i.d.isEmpty()){ TextView desc=menuText(i.d,11,Color.DKGRAY); desc.setMaxLines(2); desc.setEllipsize(TextUtils.TruncateAt.END); desc.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT); info.addView(desc,new LinearLayout.LayoutParams(-1,dp(44))); }
+  name.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
+  info.addView(name,new LinearLayout.LayoutParams(-1,dp(42)));
+
+  if(!deal){
+    TextView price=menuText("Rs "+i.p,17,ORANGE);
+    price.setTypeface(null,Typeface.BOLD);
+    info.addView(price,new LinearLayout.LayoutParams(-1,dp(30)));
+  }
+
+  top.addView(info,new LinearLayout.LayoutParams(0,dp(82),1));
+
+  if(deal){
+    LinearLayout priceBox=new LinearLayout(this);
+    priceBox.setOrientation(LinearLayout.VERTICAL);
+    priceBox.setGravity(Gravity.CENTER);
+    TextView price=menuText("Rs "+i.p,17,ORANGE);
+    price.setTypeface(null,Typeface.BOLD); price.setGravity(Gravity.CENTER);
+    priceBox.addView(price,new LinearLayout.LayoutParams(dp(76),dp(34)));
+    TextView tag=menuText("DEAL",10,GREEN); tag.setGravity(Gravity.CENTER);
+    tag.setTypeface(null,Typeface.BOLD);
+    priceBox.addView(tag,new LinearLayout.LayoutParams(dp(76),dp(24)));
+    top.addView(priceBox,new LinearLayout.LayoutParams(dp(82),dp(82)));
+  }
+
+  card.addView(top,new LinearLayout.LayoutParams(-1,dp(82)));
+
+  if(deal&&products.length>0){
+    TextView included=menuText("INCLUDED IN THIS DEAL",12,ORANGE);
+    included.setTypeface(null,Typeface.BOLD);
+    included.setPadding(0,dp(10),0,dp(4));
+    card.addView(included,new LinearLayout.LayoutParams(-1,dp(28)));
+
+    for(String product:products){
+      LinearLayout pr=new LinearLayout(this);
+      pr.setGravity(Gravity.CENTER_VERTICAL);
+      pr.setPadding(dp(4),dp(3),dp(4),dp(3));
+      pr.setBackground(cardBg(Color.rgb(255,248,238),16));
+
+      ImageView pim=new ImageView(this);
+      pim.setScaleType(ImageView.ScaleType.CENTER_CROP);
+      pim.setBackground(cardBg(Color.rgb(245,235,225),14));
+      pim.setClipToOutline(true);
+      loadFoodImage(pim,dealImageCategory(product));
+      pr.addView(pim,new LinearLayout.LayoutParams(dp(46),dp(46)));
+
+      TextView pt=menuText(product,13,INK);
+      pt.setTypeface(null,Typeface.BOLD);
+      pt.setGravity(Gravity.CENTER_VERTICAL|Gravity.LEFT);
+      pt.setMaxLines(2);
+      pt.setEllipsize(TextUtils.TruncateAt.END);
+      LinearLayout.LayoutParams ptp=new LinearLayout.LayoutParams(0,dp(50),1);
+      ptp.setMargins(dp(9),0,0,0);
+      pr.addView(pt,ptp);
+
+      TextView dot=menuText("✓",16,GREEN);
+      dot.setGravity(Gravity.CENTER);
+      dot.setTypeface(null,Typeface.BOLD);
+      pr.addView(dot,new LinearLayout.LayoutParams(dp(28),dp(50)));
+
+      LinearLayout.LayoutParams pp=new LinearLayout.LayoutParams(-1,dp(52));
+      pp.setMargins(0,dp(3),0,dp(3));
+      card.addView(pr,pp);
+    }
+  }else if(deal){
+    TextView desc=menuText(i.d,12,Color.DKGRAY);
+    desc.setMaxLines(2); desc.setEllipsize(TextUtils.TruncateAt.END);
+    desc.setPadding(0,dp(8),0,dp(4));
+    card.addView(desc,new LinearLayout.LayoutParams(-1,dp(50)));
+  }
 
   LinearLayout bottom=new LinearLayout(this);
   bottom.setGravity(Gravity.CENTER_VERTICAL);
-
-  TextView price=menuText("Rs "+i.p,17,ORANGE);
-  price.setTypeface(null,Typeface.BOLD);
-  price.setGravity(Gravity.CENTER_VERTICAL);price.setIncludeFontPadding(false);
-  bottom.addView(price,new LinearLayout.LayoutParams(0,dp(42),1));
-
-  Button add=pill("ADD",ORANGE);
+  if(!deal){
+    TextView price=menuText("Rs "+i.p,17,ORANGE);
+    price.setTypeface(null,Typeface.BOLD);
+    bottom.addView(price,new LinearLayout.LayoutParams(0,dp(44),1));
+  }else{
+    TextView hint=menuText(products.length+" products included",12,Color.DKGRAY);
+    hint.setTypeface(null,Typeface.BOLD);
+    bottom.addView(hint,new LinearLayout.LayoutParams(0,dp(44),1));
+  }
+  Button add=pill(deal?"ADD DEAL":"ADD",ORANGE);
   add.setTextSize(12);
-  add.setPadding(8,0,8,0);
-  bottom.addView(add,new LinearLayout.LayoutParams(dp(82),dp(40)));
-  info.addView(bottom,new LinearLayout.LayoutParams(-1,dp(42)));
+  bottom.addView(add,new LinearLayout.LayoutParams(dp(deal?108:82),dp(42)));
+  card.addView(bottom,new LinearLayout.LayoutParams(-1,dp(48)));
 
-  card.addView(info,new LinearLayout.LayoutParams(0,dp(88),1));
-
-  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,i.c.equals("Deals")?dp(140):dp(108));
-  cp.setMargins(dp(3),dp(6),dp(3),dp(6));
+  int cardHeight=deal?130+(products.length*58):108;
+  LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(-1,dp(cardHeight));
+  cp.setMargins(dp(3),dp(7),dp(3),dp(7));
   list.addView(card,cp);
 
   add.setOnClickListener(v->{
@@ -177,6 +250,29 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  sum();
 }
 
+String[] dealProducts(String d){
+ if(d==null||d.trim().isEmpty())return new String[0];
+ String x=d.replaceFirst("(?i)^Includes:\\s*","");
+ String[] raw=x.split("\\s*•\\s*");
+ ArrayList<String> out=new ArrayList<>();
+ for(String z:raw)if(!z.trim().isEmpty())out.add(z.trim());
+ return out.toArray(new String[0]);
+}
+
+String dealImageCategory(String product){
+ String x=product.toLowerCase(Locale.US);
+ if(x.contains("pizza"))return "Pizza";
+ if(x.contains("shawarma")||x.contains("doner"))return "Shawarma";
+ if(x.contains("burger"))return "Burgers";
+ if(x.contains("fries"))return "Fries";
+ if(x.contains("wing")||x.contains("nugget"))return "Wings";
+ if(x.contains("pasta"))return "Pasta";
+ if(x.contains("wrap")||x.contains("roll"))return "Wraps";
+ if(x.contains("sandwich"))return "Sandwich";
+ if(x.contains("bottle")||x.contains("drink")||x.contains("coke"))return "Drinks";
+ return "Other";
+}
+
 void loadFoodImage(ImageView v,String category){
  String url=null;
  if(category.equals("Burgers"))url="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=82";
@@ -187,6 +283,7 @@ void loadFoodImage(ImageView v,String category){
  else if(category.equals("Sandwich"))url="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=82";
  else if(category.equals("Wraps"))url="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?auto=format&fit=crop&w=700&q=82";
  else if(category.equals("Shawarma")||category.equals("Doner"))url="https://images.unsplash.com/photo-1529006557810-274b9b2fc783?auto=format&fit=crop&w=700&q=82";
+ else if(category.equals("Drinks"))url="https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=700&q=82";
  else url="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=82";
  final String u=url;
  new AsyncTask<Void,Void,Bitmap>(){protected Bitmap doInBackground(Void...x){try{HttpURLConnection c=(HttpURLConnection)new URL(u).openConnection();c.setConnectTimeout(6000);c.setReadTimeout(8000);c.connect();Bitmap b=BitmapFactory.decodeStream(c.getInputStream());c.disconnect();return b;}catch(Exception e){return null;}}protected void onPostExecute(Bitmap b){if(b!=null){v.setImageBitmap(b);v.setAlpha(0f);v.animate().alpha(1f).setDuration(350).start();}}}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
