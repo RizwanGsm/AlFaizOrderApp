@@ -1,36 +1,89 @@
 <!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Al-Faiz Remote Control</title><!-- pages-v2 -->
+<title>Al-Faiz Admin Control</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#fff5dc;color:#222}.wrap{max-width:900px;margin:auto;padding:18px}
-.card{background:#fff;padding:20px;border-radius:20px;margin:14px 0;box-shadow:0 4px 16px #0002}
-h1{color:#f4511e}button,a{display:inline-block;padding:13px 18px;border-radius:12px;border:0;background:#f4511e;color:#fff;text-decoration:none;font-weight:bold;margin:5px;cursor:pointer}
-.danger{background:#444}.active{background:#1b8e3e}.muted{color:#666;line-height:1.5}.status{font-size:20px;font-weight:bold;margin:10px 0}
-pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto}
-</style></head><body><div class="wrap">
-<h1>🍔 Al-Faiz Remote Control</h1>
-<div class="card"><h2>Remote App Control</h2>
-<div id="status" class="status">Checking GitHub config...</div>
-<p class="muted">This panel uses GitHub as the remote configuration source. Changes are made to <b>online/github-config.json</b> and the Android app reads that file from GitHub.</p>
-<a id="edit" href="https://github.com/RizwanGsm/AlFaizOrderApp/edit/main/online/github-config.json">OPEN CONFIG IN GITHUB</a>
+*{box-sizing:border-box}body{font-family:Arial,sans-serif;margin:0;background:#fff5dc;color:#222}
+.wrap{max-width:900px;margin:auto;padding:18px}.card{background:#fff;padding:22px;border-radius:22px;margin:14px 0;box-shadow:0 5px 20px #0002}
+h1{color:#f4511e;margin-bottom:6px}.muted{color:#666;line-height:1.5}.status{text-align:center;font-size:24px;font-weight:800;margin:18px 0}
+.status.on{color:#16833a}.status.off{color:#d71920}
+.controls{display:flex;gap:14px;justify-content:center}.toggle{flex:1;min-height:90px;border:0;border-radius:18px;color:#fff;font-size:24px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px #0003}.onbtn{background:#16833a}.offbtn{background:#d71920}.toggle:disabled{opacity:.45;cursor:not-allowed}
+input{width:100%;padding:14px;border:1px solid #ccc;border-radius:12px;font-size:15px}button.small,a.small{display:inline-block;padding:12px 16px;border:0;border-radius:12px;background:#f4511e;color:#fff;text-decoration:none;font-weight:bold;margin-top:10px;cursor:pointer}
+pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;font-size:12px}
+.note{background:#fff8e8;padding:12px;border-radius:12px}.ok{color:#16833a}.err{color:#c62828}
+</style></head>
+<body><div class="wrap">
+<h1>🍔 Al-Faiz Admin Control</h1>
+<p class="muted">Remote control for the official Al-Faiz Android app.</p>
+
+<div class="card">
+<h2>Remote App Control</h2>
+<div id="status" class="status">Checking...</div>
+<div class="controls">
+<button id="onBtn" class="toggle onbtn" onclick="setApp(true)" disabled>🟢 TURN APP ON</button>
+<button id="offBtn" class="toggle offbtn" onclick="setApp(false)" disabled>🔴 TURN APP OFF</button>
 </div>
-<div class="card"><h2>How to shut down the app</h2>
-<ol class="muted"><li>Open the GitHub config using the button above.</li><li>Find <code>"appEnabled": true</code>.</li><li>Change it to <code>"appEnabled": false</code>.</li><li>Commit the change to <b>main</b>.</li></ol>
-<p class="muted">To reactivate it, change <code>false</code> back to <code>true</code>. The official app checks this setting when it starts.</p>
+<p id="message" class="muted"></p>
 </div>
-<div class="card"><h2>Menu & Restaurant Changes</h2>
-<p class="muted">The same JSON file controls the WhatsApp number, menu, prices, deals and enabled/hidden products.</p>
-<a href="https://github.com/RizwanGsm/AlFaizOrderApp/edit/main/online/github-config.json">EDIT MENU / PRICES</a>
-<a href="https://github.com/RizwanGsm/AlFaizOrderApp" class="danger">OPEN REPOSITORY</a>
+
+<div class="card">
+<h2>🔐 GitHub authorization</h2>
+<p class="muted">Enter a GitHub fine-grained token with access to this repository's Contents. The token is kept only in this browser session and is not written into the repository.</p>
+<input id="token" type="password" placeholder="GitHub token (fine-grained, Contents read/write)">
+<button class="small" onclick="connect()">Connect & Load</button>
+<a class="small" href="https://github.com/settings/personal-access-tokens/fine-grained" target="_blank">Create token</a>
+<div class="note muted"><b>Token permission:</b> Repository access → AlFaizOrderApp → Contents: Read and write.</div>
 </div>
-<div class="card"><h2>Current configuration</h2><pre id="json">Loading...</pre></div>
+
+<div class="card"><h2>Current configuration</h2><pre id="json">Connect to GitHub to load configuration.</pre></div>
+
+<div class="card">
+<h2>Menu & Restaurant Changes</h2>
+<a class="small" href="https://github.com/RizwanGsm/AlFaizOrderApp/edit/main/online/github-config.json" target="_blank">EDIT CONFIG IN GITHUB</a>
+<a class="small" href="https://github.com/RizwanGsm/AlFaizOrderApp" target="_blank">OPEN REPOSITORY</a>
 </div>
+</div>
+
 <script>
-const raw="https://raw.githubusercontent.com/RizwanGsm/AlFaizOrderApp/main/online/github-config.json";
-fetch(raw+"?t="+Date.now()).then(r=>r.json()).then(x=>{
- const on=!x.settings||x.settings.appEnabled!==false;
- document.getElementById("status").textContent=on?"🟢 APP ACTIVE":"🔴 APP SHUT DOWN";
- document.getElementById("status").className="status "+(on?"active":"");
- document.getElementById("json").textContent=JSON.stringify(x,null,2);
-}).catch(e=>{document.getElementById("status").textContent="Unable to read GitHub config";document.getElementById("json").textContent=e});
+const api="https://api.github.com/repos/RizwanGsm/AlFaizOrderApp/contents/online/github-config.json";
+let config=null,fileSha=null;
+const tokenEl=document.getElementById("token"),statusEl=document.getElementById("status"),msg=document.getElementById("message"),jsonEl=document.getElementById("json");
+const saved=sessionStorage.getItem("alfaiz_admin_token"); if(saved) tokenEl.value=saved;
+
+function auth(){const t=tokenEl.value.trim();if(!t){msg.innerHTML='<span class="err">Enter a GitHub token first.</span>';return null}return t}
+function headers(t){return {"Accept":"application/vnd.github+json","Authorization":"Bearer "+t,"X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"}}
+function b64decode(s){const bin=atob(s.replace(/\n/g,""));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}
+function b64encode(s){const bytes=new TextEncoder().encode(s);let bin="";for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin)}
+function render(){
+ const on=!config.settings||config.settings.appEnabled!==false;
+ statusEl.textContent=on?"🟢 APP ACTIVE":"🔴 APP SHUT DOWN";
+ statusEl.className="status "+(on?"on":"off");
+ jsonEl.textContent=JSON.stringify(config,null,2);
+ document.getElementById("onBtn").disabled=on;
+ document.getElementById("offBtn").disabled=!on;
+}
+async function load(){
+ const t=auth();if(!t)return;
+ msg.textContent="Loading GitHub configuration...";
+ try{
+  const r=await fetch(api,{headers:headers(t),cache:"no-store"}); const x=await r.json();
+  if(!r.ok)throw new Error(x.message||"GitHub API error");
+  fileSha=x.sha;config=JSON.parse(b64decode(x.content));render();
+  sessionStorage.setItem("alfaiz_admin_token",t);msg.innerHTML='<span class="ok">Connected. App control is ready.</span>';
+ }catch(e){msg.innerHTML='<span class="err">Connection failed: '+e.message+'</span>';document.getElementById("onBtn").disabled=true;document.getElementById("offBtn").disabled=true}
+}
+async function connect(){await load()}
+async function setApp(enabled){
+ const t=auth();if(!t||!config)return;
+ const action=enabled?"enable":"disable";
+ if(!confirm("Are you sure you want to "+action+" the Al-Faiz app?"))return;
+ document.getElementById("onBtn").disabled=true;document.getElementById("offBtn").disabled=true;
+ msg.textContent="Updating GitHub...";
+ try{
+  config.settings=config.settings||{};config.settings.appEnabled=enabled;
+  const r=await fetch(api,{method:"PUT",headers:headers(t),body:JSON.stringify({message:(enabled?"Enable":"Disable")+" Al-Faiz app remotely",content:b64encode(JSON.stringify(config,null,2)+"\n"),sha:fileSha,branch:"main"})});
+  const x=await r.json();if(!r.ok)throw new Error(x.message||"Update failed");
+  fileSha=x.content.sha;render();msg.innerHTML='<span class="ok">✓ App is now '+(enabled?"ON":"OFF")+'. The change has been committed to GitHub.</span>';
+ }catch(e){msg.innerHTML='<span class="err">Update failed: '+e.message+'</span>';await load()}
+}
+if(saved)load();
 </script></body></html>
