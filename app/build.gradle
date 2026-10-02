@@ -3,7 +3,7 @@ def ks=System.getenv('ALFAIZ_KEYSTORE_PATH'), kp=System.getenv('ALFAIZ_KEYSTORE_
 def signed=ks&&kp&&ka&&kpass
 android {
  namespace 'com.alfaiz.fastfood'; compileSdk 35
- defaultConfig { applicationId 'com.alfaiz.fastfood'; minSdk 23; targetSdk 35; versionCode 2; versionName '1.1.0' }
+ defaultConfig { applicationId 'com.alfaiz.fastfood'; minSdk 23; targetSdk 35; versionCode 3; versionName '1.2.0' }
  buildTypes { release { minifyEnabled false; shrinkResources false; if(signed) signingConfig signingConfigs.release } }
  if(signed) { signingConfigs { release { storeFile file(ks); storePassword kp; keyAlias ka; keyPassword kpass } } }
 }
