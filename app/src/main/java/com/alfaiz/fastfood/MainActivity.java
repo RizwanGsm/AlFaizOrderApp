@@ -291,7 +291,7 @@ void loadFoodImage(ImageView v,String category){
     m.append((char)10).append("*TOTAL: Rs ").append(total).append("*");
     try{
       String u=URLEncoder.encode(m.toString(),"UTF-8");
-      startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://wa.me/923177052500?text="+u)));
+      startActivity(new Intent(Intent.ACTION_VIEW,Uri.parse("https://wa.me/923168553075?text="+u)));
     }catch(Exception e){ Toast.makeText(this,"WhatsApp unavailable",1).show(); }
   }
   void profile(){
