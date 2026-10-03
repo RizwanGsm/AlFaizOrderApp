@@ -129,8 +129,10 @@ function renderMenu(){
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]||c))}
 async function editPrice(index){
- const t=auth();if(!t||!config||!Array.isArray(config.menu))return;
- const item=config.menu[index];if(!item)return;
+ if(!config||!Array.isArray(config.menu)){alert("Please connect and load the menu first.");return}
+ const item=config.menu[index];if(!item){alert("Menu item not found.");return}
+ const t=auth();if(!t)return;
+ if(!fileSha){alert("Please tap Connect & Load first so the menu can be edited.");return}
  const value=prompt("Enter new price for "+(item.name||"menu item")+" (Rs):",String(Number(item.price||0)));
  if(value===null)return;
  const price=Number(value);
