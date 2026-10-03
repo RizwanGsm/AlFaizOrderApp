@@ -52,10 +52,22 @@ EditText modernField(String hint){EditText e=f(hint);e.setBackground(cardBg(Colo
  TextView title=t("AL-FAIZ FAST FOOD",21,Color.WHITE);
  title.setTypeface(null,Typeface.BOLD);
  h.addView(title,new LinearLayout.LayoutParams(0,dp(60),1));
+ TextView refresh=t("↻",25,Color.WHITE);
+ refresh.setGravity(Gravity.CENTER);
+ refresh.setBackground(cardBg(Color.rgb(220,65,20),30));
+ h.addView(refresh,new LinearLayout.LayoutParams(dp(46),dp(46)));
+ refresh.setOnClickListener(v->{
+  refresh.setEnabled(false);
+  Toast.makeText(this,"Refreshing menu...",Toast.LENGTH_SHORT).show();
+  fetchRemote(false);
+  new Handler(Looper.getMainLooper()).postDelayed(()->refresh.setEnabled(true),1800);
+ });
  TextView prof=t("👤",22,Color.WHITE);
  prof.setGravity(Gravity.CENTER);
  prof.setBackground(cardBg(Color.rgb(220,65,20),30));
- h.addView(prof,new LinearLayout.LayoutParams(dp(46),dp(46)));
+ LinearLayout.LayoutParams plp=new LinearLayout.LayoutParams(dp(46),dp(46));
+ plp.setMargins(dp(6),0,0,0);
+ h.addView(prof,plp);
  prof.setOnClickListener(v->profile());
  root.addView(h,new LinearLayout.LayoutParams(-1,dp(60)));
 
