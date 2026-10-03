@@ -10,7 +10,7 @@ h1{color:#f4511e;margin-bottom:6px}.muted{color:#666;line-height:1.5}.status{tex
 input{width:100%;padding:14px;border:1px solid #ccc;border-radius:12px;font-size:15px}button.small,a.small{display:inline-block;padding:12px 16px;border:0;border-radius:12px;background:#f4511e;color:#fff;text-decoration:none;font-weight:bold;margin-top:10px;cursor:pointer}
 pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;font-size:12px}
 .tabs{display:flex;gap:8px;margin:14px 0}.tab{flex:1;padding:15px;border:0;border-radius:14px;background:#eee;font-size:16px;font-weight:800;cursor:pointer}.tab.active{background:#f4511e;color:#fff}
-.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formgrid label{font-weight:700}.formgrid input{margin-top:6px}.addmenu{width:100%;margin-top:14px;padding:16px;border:0;border-radius:14px;background:#16833a;color:#fff;font-size:18px;font-weight:800;cursor:pointer}.menuList{display:grid;gap:8px}.menuRow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px}.menuRow .name{font-weight:700}.menuRow .price{font-weight:800;color:#f4511e}.menuRow small{color:#777}@media(max-width:650px){.formgrid{grid-template-columns:1fr}.controls{flex-direction:column}}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formgrid label{font-weight:700}.formgrid input{margin-top:6px}.addmenu{width:100%;margin-top:14px;padding:16px;border:0;border-radius:14px;background:#16833a;color:#fff;font-size:18px;font-weight:800;cursor:pointer}.menuList{display:grid;gap:8px}.menuRow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px}.menuRow .name{font-weight:700}.menuRow .price{font-weight:800;color:#f4511e}.editbtn{padding:9px 12px;border:0;border-radius:10px;background:#f4511e;color:#fff;font-weight:800;cursor:pointer}.editbtn:disabled{opacity:.5}.menuRow small{color:#777}@media(max-width:650px){.formgrid{grid-template-columns:1fr}.controls{flex-direction:column}}
 .note{background:#fff8e8;padding:12px;border-radius:12px}.ok{color:#16833a}.err{color:#c62828}
 </style></head>
 <body><div class="wrap">
@@ -125,9 +125,33 @@ function renderMenu(){
  const el=document.getElementById("menuList");
  if(!config||!Array.isArray(config.menu)){el.textContent="Connect to GitHub to manage the menu.";return}
  if(!config.menu.length){el.textContent="No menu items yet.";return}
- el.innerHTML=config.menu.map((m,i)=>'<div class="menuRow"><div><div class="name">'+escapeHtml(m.name||"Unnamed")+'</div><small>'+escapeHtml(m.category||"Other")+(m.enabled===false?" • DISABLED":"")+'</small></div><div class="price">Rs '+Number(m.price||0)+'</div></div>').join("");
+ el.innerHTML=config.menu.map((m,i)=>'<div class="menuRow"><div><div class="name">'+escapeHtml(m.name||"Unnamed")+'</div><small>'+escapeHtml(m.category||"Other")+(m.enabled===false?" • DISABLED":"")+'</small></div><div style="display:flex;align-items:center;gap:8px"><div class="price">Rs '+Number(m.price||0)+'</div><button class="editbtn" onclick="editPrice('+i+')">✏️ EDIT</button></div></div>').join("");
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]||c))}
+async function editPrice(index){
+ const t=auth();if(!t||!config||!Array.isArray(config.menu))return;
+ const item=config.menu[index];if(!item)return;
+ const value=prompt("Enter new price for "+(item.name||"menu item")+" (Rs):",String(Number(item.price||0)));
+ if(value===null)return;
+ const price=Number(value);
+ if(!Number.isFinite(price)||price<0){alert("Please enter a valid price.");return}
+ const oldPrice=item.price;
+ item.price=price;
+ const mm=document.getElementById("menuMessage");
+ mm.textContent="Saving new price...";
+ renderMenu();
+ try{
+  const r=await fetch(api,{method:"PUT",headers:headers(t),body:JSON.stringify({message:"Update price: "+(item.name||"menu item")+" to Rs "+price,content:b64encode(JSON.stringify(config,null,2)+"\n"),sha:fileSha,branch:"main"})});
+  const x=await r.json();if(!r.ok)throw new Error(x.message||"Update failed");
+  fileSha=x.content.sha;
+  render();renderMenu();
+  mm.innerHTML='<span class="ok">✓ Price updated successfully to Rs '+price+'.</span>';
+ }catch(e){
+  item.price=oldPrice;
+  renderMenu();
+  mm.innerHTML='<span class="err">Could not save price: '+e.message+'</span>';
+ }
+}
 async function addMenuItem(){
  const t=auth();if(!t||!config)return;
  const category=document.getElementById("newCategory").value.trim();
