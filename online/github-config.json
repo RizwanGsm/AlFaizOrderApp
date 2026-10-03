@@ -5,14 +5,7 @@
     "appEnabled": true
   },
   "menu": [
-    {
-      "category": "Shawarma",
-      "name": "Test",
-      "price": 100,
-      "enabled": true,
-      "details": "Test item"
-    },
-    {
+     {
       "category": "Shawarma",
       "name": "Chicken Shawarma",
       "price": 160,
