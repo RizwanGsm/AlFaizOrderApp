@@ -9,12 +9,20 @@ h1{color:#f4511e;margin-bottom:6px}.muted{color:#666;line-height:1.5}.status{tex
 .controls{display:flex;gap:14px;justify-content:center}.toggle{flex:1;min-height:90px;border:0;border-radius:18px;color:#fff;font-size:24px;font-weight:800;cursor:pointer;box-shadow:0 5px 12px #0003}.onbtn{background:#16833a}.offbtn{background:#d71920}.toggle:disabled{opacity:.45;cursor:not-allowed}
 input{width:100%;padding:14px;border:1px solid #ccc;border-radius:12px;font-size:15px}button.small,a.small{display:inline-block;padding:12px 16px;border:0;border-radius:12px;background:#f4511e;color:#fff;text-decoration:none;font-weight:bold;margin-top:10px;cursor:pointer}
 pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;font-size:12px}
+.tabs{display:flex;gap:8px;margin:14px 0}.tab{flex:1;padding:15px;border:0;border-radius:14px;background:#eee;font-size:16px;font-weight:800;cursor:pointer}.tab.active{background:#f4511e;color:#fff}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.formgrid label{font-weight:700}.formgrid input{margin-top:6px}.addmenu{width:100%;margin-top:14px;padding:16px;border:0;border-radius:14px;background:#16833a;color:#fff;font-size:18px;font-weight:800;cursor:pointer}.menuList{display:grid;gap:8px}.menuRow{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:12px;border:1px solid #eee;border-radius:12px}.menuRow .name{font-weight:700}.menuRow .price{font-weight:800;color:#f4511e}.menuRow small{color:#777}@media(max-width:650px){.formgrid{grid-template-columns:1fr}.controls{flex-direction:column}}
 .note{background:#fff8e8;padding:12px;border-radius:12px}.ok{color:#16833a}.err{color:#c62828}
 </style></head>
 <body><div class="wrap">
 <h1>🍔 Al-Faiz Admin Control</h1>
 <p class="muted">Remote control for the official Al-Faiz Android app.</p>
 
+<div class="tabs">
+<button class="tab active" onclick="showTab('control',this)">🎛️ App Control</button>
+<button class="tab" onclick="showTab('menu',this)">🍔 Add Menu</button>
+</div>
+
+<div id="controlTab">
 <div class="card">
 <h2>Remote App Control</h2>
 <div id="status" class="status">Loading status...</div>
@@ -23,6 +31,28 @@ pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;fon
 <button id="offBtn" class="toggle offbtn" onclick="setApp(false)" disabled>🔴 TURN APP OFF</button>
 </div>
 <p id="message" class="muted"></p>
+</div>
+
+</div>
+
+<div id="menuTab" style="display:none">
+<div class="card">
+<h2>🍔 Add New Menu Item</h2>
+<p class="muted">Add a new food item and price. After saving, the item is written to the online menu configuration and will be available to the Android app after its next remote refresh.</p>
+<div class="formgrid">
+<label>Category<input id="newCategory" placeholder="e.g. Burgers, Pizza, Drinks"></label>
+<label>Menu item name<input id="newName" placeholder="e.g. Chicken Cheese Burger"></label>
+<label>Price (Rs)<input id="newPrice" type="number" min="0" step="1" placeholder="350"></label>
+<label>Details (optional)<input id="newDetails" placeholder="Optional description / deal details"></label>
+</div>
+<button class="addmenu" onclick="addMenuItem()">➕ ADD MENU ITEM</button>
+<div id="menuMessage" class="muted"></div>
+</div>
+
+<div class="card">
+<h2>📋 Current Menu</h2>
+<div id="menuList" class="menuList">Connect to GitHub to manage the menu.</div>
+</div>
 </div>
 
 <div class="card">
@@ -68,7 +98,7 @@ async function load(){
  try{
   const r=await fetch(api+"?t="+Date.now(),{headers:headers(t),cache:"no-store"}); const x=await r.json();
   if(!r.ok)throw new Error("HTTP "+r.status+": "+(x.message||"GitHub API error"));
-  fileSha=x.sha;config=JSON.parse(b64decode(x.content));render();
+  fileSha=x.sha;config=JSON.parse(b64decode(x.content));render();renderMenu();
   sessionStorage.setItem("alfaiz_admin_token",t);msg.innerHTML='<span class="ok">Connected. App control is ready.</span>';
  }catch(e){msg.innerHTML='<span class="err">Connection failed: '+e.message+'</span>';document.getElementById("onBtn").disabled=true;document.getElementById("offBtn").disabled=true}
 }
@@ -84,7 +114,46 @@ async function loadPublic(){
   msg.innerHTML='<span class="err">Status check failed: '+e.message+'</span>';
  }
 }
-async function connect(){await load()}
+function showTab(name,btn){
+ document.getElementById("controlTab").style.display=name==="control"?"block":"none";
+ document.getElementById("menuTab").style.display=name==="menu"?"block":"none";
+ document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+ if(btn)btn.classList.add("active");
+ if(name==="menu")renderMenu();
+}
+function renderMenu(){
+ const el=document.getElementById("menuList");
+ if(!config||!Array.isArray(config.menu)){el.textContent="Connect to GitHub to manage the menu.";return}
+ if(!config.menu.length){el.textContent="No menu items yet.";return}
+ el.innerHTML=config.menu.map((m,i)=>'<div class="menuRow"><div><div class="name">'+escapeHtml(m.name||"Unnamed")+'</div><small>'+escapeHtml(m.category||"Other")+(m.enabled===false?" • DISABLED":"")+'</small></div><div class="price">Rs '+Number(m.price||0)+'</div></div>').join("");
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]||c))}
+async function addMenuItem(){
+ const t=auth();if(!t||!config)return;
+ const category=document.getElementById("newCategory").value.trim();
+ const name=document.getElementById("newName").value.trim();
+ const price=Number(document.getElementById("newPrice").value);
+ const details=document.getElementById("newDetails").value.trim();
+ const mm=document.getElementById("menuMessage");
+ if(!category||!name||!Number.isFinite(price)||price<0){mm.innerHTML='<span class="err">Enter category, item name and a valid price.</span>';return}
+ if(!Array.isArray(config.menu))config.menu=[];
+ if(config.menu.some(m=>String(m.name||"").toLowerCase()===name.toLowerCase() && String(m.category||"").toLowerCase()===category.toLowerCase())){mm.innerHTML='<span class="err">This menu item already exists in that category.</span>';return}
+ const item={category,name,price,enabled:true};
+ if(details)item.details=details;
+ config.menu.push(item);
+ mm.textContent="Saving new menu item...";
+ document.querySelector(".addmenu").disabled=true;
+ try{
+  const r=await fetch(api,{method:"PUT",headers:headers(t),body:JSON.stringify({message:"Add menu item: "+name,content:b64encode(JSON.stringify(config,null,2)+"\n"),sha:fileSha,branch:"main"})});
+  const x=await r.json();if(!r.ok)throw new Error(x.message||"Update failed");
+  fileSha=x.content.sha;render();renderMenu();
+  document.getElementById("newCategory").value="";document.getElementById("newName").value="";document.getElementById("newPrice").value="";document.getElementById("newDetails").value="";
+  mm.innerHTML='<span class="ok">✓ Menu item added successfully.</span>';
+ }catch(e){
+  config.menu.pop();mm.innerHTML='<span class="err">Could not save: '+e.message+'</span>';
+ }finally{document.querySelector(".addmenu").disabled=false}
+}
+async function connect(){await load();renderMenu()}
 async function setApp(enabled){
  const t=auth();if(!t||!config)return;
  const action=enabled?"enable":"disable";
