@@ -164,7 +164,10 @@ async function addMenuItem(){
  if(config.menu.some(m=>String(m.name||"").toLowerCase()===name.toLowerCase() && String(m.category||"").toLowerCase()===category.toLowerCase())){mm.innerHTML='<span class="err">This menu item already exists in that category.</span>';return}
  const item={category,name,price,enabled:true};
  if(details)item.details=details;
- config.menu.push(item);
+ // Insert new items at the beginning of their selected category, while preserving other categories/items.
+ const firstInCategory=config.menu.findIndex(m=>String(m.category||"Other").toLowerCase()===category.toLowerCase());
+ if(firstInCategory===-1) config.menu.push(item);
+ else config.menu.splice(firstInCategory,0,item);
  mm.textContent="Saving new menu item...";
  document.querySelector(".addmenu").disabled=true;
  try{
@@ -174,7 +177,9 @@ async function addMenuItem(){
   document.getElementById("newCategory").value="";document.getElementById("newName").value="";document.getElementById("newPrice").value="";document.getElementById("newDetails").value="";
   mm.innerHTML='<span class="ok">✓ Menu item added successfully.</span>';
  }catch(e){
-  config.menu.pop();mm.innerHTML='<span class="err">Could not save: '+e.message+'</span>';
+  const addedIndex=config.menu.findIndex(m=>m===item);
+ if(addedIndex>=0)config.menu.splice(addedIndex,1);
+ mm.innerHTML='<span class="err">Could not save: '+e.message+'</span>';
  }finally{document.querySelector(".addmenu").disabled=false}
 }
 async function connect(){await load();renderMenu()}
