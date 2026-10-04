@@ -5,7 +5,7 @@
     "appEnabled": true
   },
   "menu": [
-     {
+    {
       "category": "Shawarma",
       "name": "Chicken Shawarma",
       "price": 160,
@@ -558,6 +558,13 @@
       "price": 900,
       "enabled": true,
       "details": "Includes: 2 Full Pasta • ½ Liter Bottle"
+    },
+    {
+      "category": "New item",
+      "name": "Test",
+      "price": 1,
+      "enabled": true,
+      "details": "Test"
     }
   ]
 }
