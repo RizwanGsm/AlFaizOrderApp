@@ -125,7 +125,7 @@ function renderMenu(){
  const el=document.getElementById("menuList");
  if(!config||!Array.isArray(config.menu)){el.textContent="Connect to GitHub to manage the menu.";return}
  if(!config.menu.length){el.textContent="No menu items yet.";return}
- el.innerHTML=config.menu.map((m,i)=>'<div class="menuRow"><div><div class="name">'+escapeHtml(m.name||"Unnamed")+'</div><small>'+escapeHtml(m.category||"Other")+(m.enabled===false?" • DISABLED":"")+'</small></div><div style="display:flex;align-items:center;gap:8px"><div class="price">Rs '+Number(m.price||0)+'</div><button class="editbtn" onclick="editPrice('+i+')<button class="deletebtn" onclick="deleteMenuItem('+i+')">🗑️ DELETE</button>">✏️ EDIT</button></div></div>').join("");
+ el.innerHTML=config.menu.map((m,i)=>'<div class="menuRow"><div><div class="name">'+escapeHtml(m.name||"Unnamed")+'</div><small>'+escapeHtml(m.category||"Other")+(m.enabled===false?" • DISABLED":"")+'</small></div><div style="display:flex;align-items:center;gap:8px"><div class="price">Rs '+Number(m.price||0)+'</div><button class="editbtn" onclick="editPrice('+i+')">✏️ EDIT</button><button class="deletebtn" onclick="deleteMenuItem('+i+')">🗑️ DELETE</button></div></div>').join("");
 }
 function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]||c))}
 async function editPrice(index){
