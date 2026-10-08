@@ -82,7 +82,7 @@ const saved=sessionStorage.getItem("alfaiz_admin_token"); if(saved) tokenEl.valu
 
 function auth(){const t=tokenEl.value.trim();if(!t){msg.innerHTML='<span class="err">Enter a GitHub token first.</span>';return null}return t}
 function headers(t){return {"Accept":"application/vnd.github+json","Authorization":"Bearer "+t,"X-GitHub-Api-Version":"2022-11-28","Content-Type":"application/json"}}
-function b64decode(s){const bin=atob(s.replace(/\s/g,""));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));return new TextDecoder().decode(bytes)}
+function b64decode(s){const bin=atob(s.replace(/\s/g,""));const bytes=Uint8Array.from(bin,c=>c.charCodeAt(0));let out=new TextDecoder().decode(bytes);if(out.charCodeAt(out.length-2)===92&&out.charCodeAt(out.length-1)===110)out=out.slice(0,-2);return out}
 function b64encode(s){const bytes=new TextEncoder().encode(s);let bin="";for(const b of bytes)bin+=String.fromCharCode(b);return btoa(bin)}
 function render(){
  const on=!config.settings||config.settings.appEnabled!==false;
