@@ -75,7 +75,7 @@ pre{background:#222;color:#fff;padding:15px;border-radius:12px;overflow:auto;fon
 
 <script>
 const api="https://api.github.com/repos/RizwanGsm/AlFaizOrderApp/contents/online/github-config.json";
-const publicConfig="https://raw.githubusercontent.com/RizwanGsm/AlFaizOrderApp/main/online/github-config.json";
+const publicConfig=api;
 let config=null,fileSha=null;
 const tokenEl=document.getElementById("token"),statusEl=document.getElementById("status"),msg=document.getElementById("message"),jsonEl=document.getElementById("json");
 const saved=sessionStorage.getItem("alfaiz_admin_token"); if(saved) tokenEl.value=saved;
@@ -105,9 +105,9 @@ async function load(){
 async function loadPublic(){
  msg.textContent="Checking public app status...";
  try{
-  const r=await fetch(publicConfig+"?t="+Date.now(),{cache:"no-store"}); if(!r.ok)throw new Error("HTTP "+r.status);
-  config=await r.json(); render();
-  msg.innerHTML='<span class="ok">Status loaded. Enter a GitHub token and tap Connect & Load to enable ON/OFF controls.</span>';
+  const r=await fetch(publicConfig+"?t="+Date.now(),{headers:{"Accept":"application/vnd.github+json"},cache:"no-store"}); if(!r.ok)throw new Error("HTTP "+r.status+": "+(await r.text()).slice(0,160));
+  const x=await r.json(); if(!x.content)throw new Error("GitHub returned no file content"); config=JSON.parse(b64decode(x.content)); render();
+  msg.innerHTML='<span class="ok">Status loaded from GitHub. Enter a GitHub token and tap Connect & Load to enable ON/OFF controls.</span>';
  }catch(e){
   statusEl.textContent="⚠️ STATUS UNAVAILABLE";statusEl.className="status off";
   jsonEl.textContent="Could not read the public configuration: "+e.message;
